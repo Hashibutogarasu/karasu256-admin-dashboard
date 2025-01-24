@@ -4,6 +4,7 @@ import { Character } from '../data/schema'
 import { DataTableRowActions } from './data-table-row-actions'
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
 import { versions } from '@/components/data-table/data'
+import { Badge } from '@/components/ui/badge'
 
 export const columns: ColumnDef<Character>[] = [
   {
@@ -144,8 +145,8 @@ export const columns: ColumnDef<Character>[] = [
       }
 
       return (
-        <div className='flex w-[100px] items-center'>
-          <span>{version.label}</span>
+        <div className='flex space-x-2'>
+          {version && <Badge variant='outline'>{version.label}</Badge>}
         </div>
       )
     },
