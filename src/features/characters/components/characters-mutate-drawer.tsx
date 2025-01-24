@@ -53,11 +53,11 @@ export function CharacterMutateDrawer({ open, onOpenChange, currentRow }: Props)
     defaultValues: currentRow ?? {
       name: '',
       description: '',
-      weapontype: '',
-      element: '',
+      weapontype: 'Sword',
+      element: 'Anemo',
       country: '',
       icon_url: '',
-      version: '',
+      version: '1.0',
     },
   })
 
