@@ -46,6 +46,9 @@ const AuthenticatedSettingsIndexLazyImport = createFileRoute(
 const AuthenticatedHelpCenterIndexLazyImport = createFileRoute(
   '/_authenticated/help-center/',
 )()
+const AuthenticatedCountriesIndexLazyImport = createFileRoute(
+  '/_authenticated/countries/',
+)()
 const AuthenticatedCharactersIndexLazyImport = createFileRoute(
   '/_authenticated/characters/',
 )()
@@ -210,6 +213,15 @@ const AuthenticatedHelpCenterIndexLazyRoute =
     import('./routes/_authenticated/help-center/index.lazy').then(
       (d) => d.Route,
     ),
+  )
+
+const AuthenticatedCountriesIndexLazyRoute =
+  AuthenticatedCountriesIndexLazyImport.update({
+    id: '/countries/',
+    path: '/countries/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/countries/index.lazy').then((d) => d.Route),
   )
 
 const AuthenticatedCharactersIndexLazyRoute =
@@ -437,11 +449,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCharactersIndexLazyImport
       parentRoute: typeof AuthenticatedRouteImport
     }
-    '/_authenticated/weapons/': {
-      id: '/_authenticated/weapons/'
-      path: '/weapons'
-      fullPath: '/weapons'
-      preLoaderRoute: typeof AuthenticatedWeaponsIndexLazyImport
+    '/_authenticated/countries/': {
+      id: '/_authenticated/countries/'
+      path: '/countries'
+      fullPath: '/countries'
+      preLoaderRoute: typeof AuthenticatedCountriesIndexLazyImport
       parentRoute: typeof AuthenticatedRouteImport
     }
     '/_authenticated/help-center/': {
@@ -465,6 +477,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUsersIndexLazyImport
       parentRoute: typeof AuthenticatedRouteImport
     }
+    '/_authenticated/weapons/': {
+      id: '/_authenticated/weapons/'
+      path: '/weapons'
+      fullPath: '/weapons'
+      preLoaderRoute: typeof AuthenticatedWeaponsIndexLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
   }
 }
 
@@ -479,17 +498,17 @@ interface AuthenticatedSettingsRouteLazyRouteChildren {
 }
 
 const AuthenticatedSettingsRouteLazyRouteChildren: AuthenticatedSettingsRouteLazyRouteChildren =
-{
-  AuthenticatedSettingsAccountLazyRoute:
-    AuthenticatedSettingsAccountLazyRoute,
-  AuthenticatedSettingsAppearanceLazyRoute:
-    AuthenticatedSettingsAppearanceLazyRoute,
-  AuthenticatedSettingsDisplayLazyRoute:
-    AuthenticatedSettingsDisplayLazyRoute,
-  AuthenticatedSettingsNotificationsLazyRoute:
-    AuthenticatedSettingsNotificationsLazyRoute,
-  AuthenticatedSettingsIndexLazyRoute: AuthenticatedSettingsIndexLazyRoute,
-}
+  {
+    AuthenticatedSettingsAccountLazyRoute:
+      AuthenticatedSettingsAccountLazyRoute,
+    AuthenticatedSettingsAppearanceLazyRoute:
+      AuthenticatedSettingsAppearanceLazyRoute,
+    AuthenticatedSettingsDisplayLazyRoute:
+      AuthenticatedSettingsDisplayLazyRoute,
+    AuthenticatedSettingsNotificationsLazyRoute:
+      AuthenticatedSettingsNotificationsLazyRoute,
+    AuthenticatedSettingsIndexLazyRoute: AuthenticatedSettingsIndexLazyRoute,
+  }
 
 const AuthenticatedSettingsRouteLazyRouteWithChildren =
   AuthenticatedSettingsRouteLazyRoute._addFileChildren(
@@ -502,6 +521,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAppsIndexLazyRoute: typeof AuthenticatedAppsIndexLazyRoute
   AuthenticatedArtifactsIndexLazyRoute: typeof AuthenticatedArtifactsIndexLazyRoute
   AuthenticatedCharactersIndexLazyRoute: typeof AuthenticatedCharactersIndexLazyRoute
+  AuthenticatedCountriesIndexLazyRoute: typeof AuthenticatedCountriesIndexLazyRoute
   AuthenticatedHelpCenterIndexLazyRoute: typeof AuthenticatedHelpCenterIndexLazyRoute
   AuthenticatedUsersIndexLazyRoute: typeof AuthenticatedUsersIndexLazyRoute
   AuthenticatedWeaponsIndexLazyRoute: typeof AuthenticatedWeaponsIndexLazyRoute
@@ -514,6 +534,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAppsIndexLazyRoute: AuthenticatedAppsIndexLazyRoute,
   AuthenticatedArtifactsIndexLazyRoute: AuthenticatedArtifactsIndexLazyRoute,
   AuthenticatedCharactersIndexLazyRoute: AuthenticatedCharactersIndexLazyRoute,
+  AuthenticatedCountriesIndexLazyRoute: AuthenticatedCountriesIndexLazyRoute,
   AuthenticatedHelpCenterIndexLazyRoute: AuthenticatedHelpCenterIndexLazyRoute,
   AuthenticatedUsersIndexLazyRoute: AuthenticatedUsersIndexLazyRoute,
   AuthenticatedWeaponsIndexLazyRoute: AuthenticatedWeaponsIndexLazyRoute,
@@ -543,6 +564,7 @@ export interface FileRoutesByFullPath {
   '/apps': typeof AuthenticatedAppsIndexLazyRoute
   '/artifacts': typeof AuthenticatedArtifactsIndexLazyRoute
   '/characters': typeof AuthenticatedCharactersIndexLazyRoute
+  '/countries': typeof AuthenticatedCountriesIndexLazyRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/settings/': typeof AuthenticatedSettingsIndexLazyRoute
   '/users': typeof AuthenticatedUsersIndexLazyRoute
@@ -568,6 +590,7 @@ export interface FileRoutesByTo {
   '/apps': typeof AuthenticatedAppsIndexLazyRoute
   '/artifacts': typeof AuthenticatedArtifactsIndexLazyRoute
   '/characters': typeof AuthenticatedCharactersIndexLazyRoute
+  '/countries': typeof AuthenticatedCountriesIndexLazyRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/settings': typeof AuthenticatedSettingsIndexLazyRoute
   '/users': typeof AuthenticatedUsersIndexLazyRoute
@@ -597,90 +620,94 @@ export interface FileRoutesById {
   '/_authenticated/apps/': typeof AuthenticatedAppsIndexLazyRoute
   '/_authenticated/artifacts/': typeof AuthenticatedArtifactsIndexLazyRoute
   '/_authenticated/characters/': typeof AuthenticatedCharactersIndexLazyRoute
-  '/_authenticated/weapons/': typeof AuthenticatedWeaponsIndexLazyRoute
+  '/_authenticated/countries/': typeof AuthenticatedCountriesIndexLazyRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexLazyRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexLazyRoute
+  '/_authenticated/weapons/': typeof AuthenticatedWeaponsIndexLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-  | ''
-  | '/500'
-  | '/otp'
-  | '/sign-in'
-  | '/settings'
-  | '/forgot-password'
-  | '/sign-in-2'
-  | '/sign-up'
-  | '/401'
-  | '/403'
-  | '/404'
-  | '/503'
-  | '/'
-  | '/settings/account'
-  | '/settings/appearance'
-  | '/settings/display'
-  | '/settings/notifications'
-  | '/apps'
-  | '/artifacts'
-  | '/characters'
-  | '/help-center'
-  | '/settings/'
-  | '/users'
-  | '/weapons'
+    | ''
+    | '/500'
+    | '/otp'
+    | '/sign-in'
+    | '/settings'
+    | '/forgot-password'
+    | '/sign-in-2'
+    | '/sign-up'
+    | '/401'
+    | '/403'
+    | '/404'
+    | '/503'
+    | '/'
+    | '/settings/account'
+    | '/settings/appearance'
+    | '/settings/display'
+    | '/settings/notifications'
+    | '/apps'
+    | '/artifacts'
+    | '/characters'
+    | '/countries'
+    | '/help-center'
+    | '/settings/'
+    | '/users'
+    | '/weapons'
   fileRoutesByTo: FileRoutesByTo
   to:
-  | '/500'
-  | '/otp'
-  | '/sign-in'
-  | '/forgot-password'
-  | '/sign-in-2'
-  | '/sign-up'
-  | '/401'
-  | '/403'
-  | '/404'
-  | '/503'
-  | '/'
-  | '/settings/account'
-  | '/settings/appearance'
-  | '/settings/display'
-  | '/settings/notifications'
-  | '/apps'
-  | '/artifacts'
-  | '/characters'
-  | '/weapons'
-  | '/help-center'
-  | '/settings'
-  | '/users'
+    | '/500'
+    | '/otp'
+    | '/sign-in'
+    | '/forgot-password'
+    | '/sign-in-2'
+    | '/sign-up'
+    | '/401'
+    | '/403'
+    | '/404'
+    | '/503'
+    | '/'
+    | '/settings/account'
+    | '/settings/appearance'
+    | '/settings/display'
+    | '/settings/notifications'
+    | '/apps'
+    | '/artifacts'
+    | '/characters'
+    | '/countries'
+    | '/help-center'
+    | '/settings'
+    | '/users'
+    | '/weapons'
   id:
-  | '__root__'
-  | '/_authenticated'
-  | '/(auth)/500'
-  | '/(auth)/otp'
-  | '/(auth)/sign-in'
-  | '/_authenticated/settings'
-  | '/(auth)/forgot-password'
-  | '/(auth)/sign-in-2'
-  | '/(auth)/sign-up'
-  | '/(errors)/401'
-  | '/(errors)/403'
-  | '/(errors)/404'
-  | '/(errors)/500'
-  | '/(errors)/503'
-  | '/_authenticated/'
-  | '/_authenticated/settings/account'
-  | '/_authenticated/settings/appearance'
-  | '/_authenticated/settings/display'
-  | '/_authenticated/settings/notifications'
-  | '/_authenticated/apps/'
-  | '/_authenticated/artifacts/'
-  | '/_authenticated/characters/'
-  | '/_authenticated/help-center/'
-  | '/_authenticated/settings/'
-  | '/_authenticated/users/'
-  | '/_authenticated/weapons/'
+    | '__root__'
+    | '/_authenticated'
+    | '/(auth)/500'
+    | '/(auth)/otp'
+    | '/(auth)/sign-in'
+    | '/_authenticated/settings'
+    | '/(auth)/forgot-password'
+    | '/(auth)/sign-in-2'
+    | '/(auth)/sign-up'
+    | '/(errors)/401'
+    | '/(errors)/403'
+    | '/(errors)/404'
+    | '/(errors)/500'
+    | '/(errors)/503'
+    | '/_authenticated/'
+    | '/_authenticated/settings/account'
+    | '/_authenticated/settings/appearance'
+    | '/_authenticated/settings/display'
+    | '/_authenticated/settings/notifications'
+    | '/_authenticated/apps/'
+    | '/_authenticated/artifacts/'
+    | '/_authenticated/characters/'
+    | '/_authenticated/countries/'
+    | '/_authenticated/help-center/'
+    | '/_authenticated/settings/'
+    | '/_authenticated/users/'
+    | '/_authenticated/weapons/'
   fileRoutesById: FileRoutesById
 }
 
@@ -746,6 +773,7 @@ export const routeTree = rootRoute
         "/_authenticated/apps/",
         "/_authenticated/artifacts/",
         "/_authenticated/characters/",
+        "/_authenticated/countries/",
         "/_authenticated/help-center/",
         "/_authenticated/users/",
         "/_authenticated/weapons/"
@@ -825,6 +853,10 @@ export const routeTree = rootRoute
     },
     "/_authenticated/characters/": {
       "filePath": "_authenticated/characters/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/countries/": {
+      "filePath": "_authenticated/countries/index.lazy.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/help-center/": {

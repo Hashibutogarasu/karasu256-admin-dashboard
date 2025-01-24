@@ -23,45 +23,37 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet'
 import { SelectDropdown } from '@/components/select-dropdown'
-import { Artifact } from '../data/schema'
+import { Country } from '../data/schema'
 import { versions } from '@/components/data-table/data'
 
 interface Props {
   open: boolean
   onOpenChange: (open: boolean) => void
-  currentRow?: Artifact
+  currentRow?: Country
 }
 
-const artifactsSchema = z.object({
-  id: z.string().min(1, 'id is required.'),
-  name: z.string().min(1, 'Please select a status.'),
+const countriesSchema = z.object({
+  name: z.string(),
   description: z.string(),
-  oneseteffect: z.string(),
-  twoseteffect: z.string(),
-  fourseteffect: z.string(),
-  icon_url: z.string().url().optional(),
+  sumbnail: z.string().url().optional(),
   version: z.string(),
 })
-type ArtifactsForm = z.infer<typeof artifactsSchema>
+type CountriesForm = z.infer<typeof countriesSchema>
 
-export function ArtifactsMutateDrawer({ open, onOpenChange, currentRow }: Props) {
+export function CountriesMutateDrawer({ open, onOpenChange, currentRow }: Props) {
   const isUpdate = !!currentRow
 
-  const form = useForm<ArtifactsForm>({
-    resolver: zodResolver(artifactsSchema),
+  const form = useForm<CountriesForm>({
+    resolver: zodResolver(countriesSchema),
     defaultValues: currentRow ?? {
-      id: '',
       name: '',
-      oneseteffect: '',
-      twoseteffect: '',
-      fourseteffect: '',
       description: '',
-      icon_url: '',
-      version: '1.0',
+      sumbnail: '',
+      version: '',
     },
   })
 
-  const onSubmit = (data: ArtifactsForm) => {
+  const onSubmit = (data: CountriesForm) => {
     // do something with the form data
     onOpenChange(false)
     form.reset()
@@ -95,7 +87,7 @@ export function ArtifactsMutateDrawer({ open, onOpenChange, currentRow }: Props)
         </SheetHeader>
         <Form {...form}>
           <form
-            id='artifacts-form'
+            id='countries-form'
             onSubmit={form.handleSubmit(onSubmit)}
             className='space-y-5 flex-1'
           >
@@ -127,51 +119,12 @@ export function ArtifactsMutateDrawer({ open, onOpenChange, currentRow }: Props)
             />
             <FormField
               control={form.control}
-              name='icon_url'
+              name='sumbnail'
               render={({ field }) => (
                 <FormItem className='space-y-1'>
-                  <FormLabel>Icon URL</FormLabel>
+                  <FormLabel>Sumbnail</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder='Enter a Icon URL' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='oneseteffect'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>One set effect</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a One Set Effect' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='twoseteffect'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Two set effect</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Two Set Effect' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='fourseteffect'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Four set effect</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Four Set Effect' />
+                    <Input {...field} placeholder='Enter a Sumbnail' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -199,7 +152,7 @@ export function ArtifactsMutateDrawer({ open, onOpenChange, currentRow }: Props)
           <SheetClose asChild>
             <Button variant='outline'>Close</Button>
           </SheetClose>
-          <Button form='artifacts-form' type='submit'>
+          <Button form='countries-form' type='submit'>
             Save changes
           </Button>
         </SheetFooter>

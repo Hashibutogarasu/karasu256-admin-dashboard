@@ -4,11 +4,11 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { columns } from './components/columns'
-import { DataTable } from './components/data-table'
 import { CharactersDialogs } from './components/characters-dialogs'
 import { CharatersPrimaryButtons } from './components/characters-primary-buttons'
 import CharactersProvider from './context/characters-context'
 import { characters } from './data/characters'
+import { DataTable } from '@/components/data-table/data-table'
 
 export default function Characters() {
   return (

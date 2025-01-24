@@ -6,11 +6,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useArtifacts } from '../context/artifacts-context'
-import { artifactSchema } from '../data/schema'
+import { useCountries } from '../context/countries-context'
+import { countrySchema } from '../data/schema'
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -19,9 +20,9 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const task = artifactSchema.parse(row.original)
+  const task = countrySchema.parse(row.original)
 
-  const { setOpen, setCurrentRow } = useArtifacts()
+  const { setOpen, setCurrentRow } = useCountries()
 
   return (
     <DropdownMenu modal={false}>
@@ -45,6 +46,8 @@ export function DataTableRowActions<TData>({
         </DropdownMenuItem>
         <DropdownMenuItem disabled>Make a copy</DropdownMenuItem>
         <DropdownMenuItem disabled>Favorite</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={() => {
             setCurrentRow(task)

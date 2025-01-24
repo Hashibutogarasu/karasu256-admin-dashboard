@@ -1,29 +1,29 @@
 import { toast } from '@/hooks/use-toast'
 import { ConfirmDialog } from '@/components/confirm-dialog'
-import { useArtifacts } from '../context/artifacts-context'
-import { ArtifactsImportDialog } from './artifacts-import-dialog'
-import { ArtifactsMutateDrawer } from './artifacts-mutate-drawer'
+import { useCountries } from '../context/countries-context'
+import { CountriesImportDialog } from './countries-import-dialog'
+import { CountriesMutateDrawer } from './countries-mutate-drawer'
 
-export function ArtifactsDialogs() {
-  const { open, setOpen, currentRow, setCurrentRow } = useArtifacts()
+export function CountriesDialogs() {
+  const { open, setOpen, currentRow, setCurrentRow } = useCountries()
   return (
     <>
-      <ArtifactsMutateDrawer
-        key='atifact-create'
+      <CountriesMutateDrawer
+        key='country-create'
         open={open === 'create'}
         onOpenChange={() => setOpen('create')}
       />
 
-      <ArtifactsImportDialog
-        key='atifact-import'
+      <CountriesImportDialog
+        key='country-import'
         open={open === 'import'}
         onOpenChange={() => setOpen('import')}
       />
 
       {currentRow && (
         <>
-          <ArtifactsMutateDrawer
-            key={`atifact-update-${currentRow.id}`}
+          <CountriesMutateDrawer
+            key={`country-update-${currentRow.id}`}
             open={open === 'update'}
             onOpenChange={() => {
               setOpen('update')
@@ -35,7 +35,7 @@ export function ArtifactsDialogs() {
           />
 
           <ConfirmDialog
-            key='atifact-delete'
+            key='country-delete'
             destructive
             open={open === 'delete'}
             onOpenChange={() => {
@@ -50,7 +50,7 @@ export function ArtifactsDialogs() {
                 setCurrentRow(null)
               }, 500)
               toast({
-                title: 'The following atifact has been deleted:',
+                title: 'The following country has been deleted:',
                 description: (
                   <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
                     <code className='text-white'>
@@ -61,10 +61,10 @@ export function ArtifactsDialogs() {
               })
             }}
             className='max-w-md'
-            title={`Delete this atifact: ${currentRow.id} ?`}
+            title={`Delete this country: ${currentRow.id} ?`}
             desc={
               <>
-                You are about to delete a atifact with the ID{' '}
+                You are about to delete a country with the ID{' '}
                 <strong>{currentRow.id}</strong>. <br />
                 This action cannot be undone.
               </>

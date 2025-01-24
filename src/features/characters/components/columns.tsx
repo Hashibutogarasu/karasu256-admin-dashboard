@@ -1,11 +1,9 @@
 import { ColumnDef } from '@tanstack/react-table'
-import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
-import { labels } from '../data/data'
 import { Character } from '../data/schema'
-import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
-import { versions } from '@/features/artifacts/data/data'
+import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
+import { versions } from '@/components/data-table/data'
 
 export const columns: ColumnDef<Character>[] = [
   {
@@ -47,11 +45,8 @@ export const columns: ColumnDef<Character>[] = [
       <DataTableColumnHeader column={column} title='Name' />
     ),
     cell: ({ row }) => {
-      const name = labels.find((name) => name.value === row.original.name)
-
       return (
         <div className='flex space-x-2'>
-          {name && <Badge variant='outline'>{name.label}</Badge>}
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
             {row.getValue('name')}
           </span>

@@ -1,12 +1,12 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Artifact } from '../data/schema'
 import { DataTableColumnHeader } from '../../../components/data-table/data-table-column-header'
 import { versions } from '@/components/data-table/data'
+import { Country } from '../data/schema'
 // import { DataTableRowActions } from './data-table-row-actions'
 
-export const columns: ColumnDef<Artifact>[] = [
+export const columns: ColumnDef<Country>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -67,60 +67,15 @@ export const columns: ColumnDef<Artifact>[] = [
     ),
   },
   {
-    accessorKey: 'icon_url',
+    accessorKey: 'sumbnail',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Icon URL' />
+      <DataTableColumnHeader column={column} title='Sumbnail URL' />
     ),
     cell: ({ row }) => (
       <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-        {row.getValue('icon_url')}
+        {row.getValue('sumbnail')}
       </span>
     ),
-  },
-  {
-    accessorKey: 'oneseteffect',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='One set effect' />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className='flex space-x-2'>
-          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('oneseteffect')}
-          </span>
-        </div>
-      )
-    },
-  },
-  {
-    accessorKey: 'twoseteffect',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Two set effect' />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className='flex space-x-2'>
-          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('twoseteffect')}
-          </span>
-        </div>
-      )
-    },
-  },
-  {
-    accessorKey: 'fourseteffect',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Four set effect' />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className='flex space-x-2'>
-          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('fourseteffect')}
-          </span>
-        </div>
-      )
-    },
   },
   {
     accessorKey: 'version',
@@ -133,9 +88,6 @@ export const columns: ColumnDef<Artifact>[] = [
       return (
         <div className='flex space-x-2'>
           {version && <Badge variant='outline'>{version.label}</Badge>}
-          {/* <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('version')}
-          </span> */}
         </div>
       )
     },

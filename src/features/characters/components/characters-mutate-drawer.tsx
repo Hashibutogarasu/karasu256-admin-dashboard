@@ -24,7 +24,7 @@ import {
 } from '@/components/ui/sheet'
 import { SelectDropdown } from '@/components/select-dropdown'
 import { Character } from '../data/schema'
-import { versions } from '@/features/artifacts/data/data'
+import { versions } from '@/components/data-table/data'
 
 interface Props {
   open: boolean
@@ -93,7 +93,7 @@ export function CharacterMutateDrawer({ open, onOpenChange, currentRow }: Props)
         </SheetHeader>
         <Form {...form}>
           <form
-            id='tasks-form'
+            id='characters-form'
             onSubmit={form.handleSubmit(onSubmit)}
             className='space-y-5 flex-1'
           >
@@ -271,7 +271,7 @@ export function CharacterMutateDrawer({ open, onOpenChange, currentRow }: Props)
           <SheetClose asChild>
             <Button variant='outline'>Close</Button>
           </SheetClose>
-          <Button form='tasks-form' type='submit'>
+          <Button form='characters-form' type='submit'>
             Save changes
           </Button>
         </SheetFooter>

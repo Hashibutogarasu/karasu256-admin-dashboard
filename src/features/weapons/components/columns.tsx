@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { versions } from '../data/data'
 import { Weapon } from '../data/schema'
-import { DataTableColumnHeader } from './data-table-column-header'
+import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
 // import { DataTableRowActions } from './data-table-row-actions'
 
 export const columns: ColumnDef<Weapon>[] = [

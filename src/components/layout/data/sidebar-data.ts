@@ -17,6 +17,7 @@ import {
   IconSword,
   IconUser,
   IconApps,
+  IconWorld,
 } from '@tabler/icons-react'
 import { AudioWaveform, Command, GalleryVerticalEnd } from 'lucide-react'
 import { type SidebarData } from '../types'
@@ -61,7 +62,7 @@ export const sidebarData: SidebarData = {
       ],
     },
     {
-      'title': 'Genshin Imact Wiki',
+      'title': 'Genshin Impact Wiki',
       items: [
         {
           title: 'Characters',
@@ -77,6 +78,11 @@ export const sidebarData: SidebarData = {
           title: 'Artifacts',
           url: '/artifacts',
           icon: IconApps,
+        },
+        {
+          title: 'Countries',
+          url: '/countries',
+          icon: IconWorld,
         },
       ]
     },
