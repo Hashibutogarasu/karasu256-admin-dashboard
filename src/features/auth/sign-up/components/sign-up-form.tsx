@@ -2,7 +2,7 @@ import { HTMLAttributes, useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
+import { IconBrandGoogle } from '@tabler/icons-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
@@ -24,6 +24,7 @@ const formSchema = z
       .string()
       .min(1, { message: 'Please enter your email' })
       .email({ message: 'Invalid email address' }),
+    nickname: z.string().min(1, { message: 'Please enter your nickname' }),
     password: z
       .string()
       .min(1, {
@@ -81,6 +82,19 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
             />
             <FormField
               control={form.control}
+              name='nickname'
+              render={({ field }) => (
+                <FormItem className='space-y-1'>
+                  <FormLabel>Nickname</FormLabel>
+                  <FormControl>
+                    <Input placeholder='Enter a Nickname' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name='password'
               render={({ field }) => (
                 <FormItem className='space-y-1'>
@@ -127,15 +141,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
                 type='button'
                 disabled={isLoading}
               >
-                <IconBrandGithub className='h-4 w-4' /> GitHub
-              </Button>
-              <Button
-                variant='outline'
-                className='w-full'
-                type='button'
-                disabled={isLoading}
-              >
-                <IconBrandFacebook className='h-4 w-4' /> Facebook
+                <IconBrandGoogle className='h-4 w-4' /> Google
               </Button>
             </div>
           </div>
