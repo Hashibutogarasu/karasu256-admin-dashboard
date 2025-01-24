@@ -93,7 +93,7 @@ export function UsersInviteDialog({ open, onOpenChange }: Props) {
                   <FormControl>
                     <Input
                       type='email'
-                      placeholder='eg: john.doe@gmail.com'
+                      placeholder='eg: karasu@karasu256.com'
                       {...field}
                     />
                   </FormControl>

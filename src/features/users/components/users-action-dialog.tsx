@@ -225,7 +225,7 @@ export function UsersActionDialog({ currentRow, open, onOpenChange }: Props) {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder='john.doe@gmail.com'
+                        placeholder='karasu@karasu256.com'
                         className='col-span-4'
                         {...field}
                       />

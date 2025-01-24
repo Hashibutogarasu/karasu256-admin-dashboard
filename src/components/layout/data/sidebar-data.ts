@@ -2,35 +2,34 @@ import {
   IconBarrierBlock,
   IconBrowserCheck,
   IconBug,
-  IconChecklist,
   IconError404,
   IconHelp,
   IconLayoutDashboard,
   IconLock,
   IconLockAccess,
-  IconMessages,
   IconNotification,
-  IconPackages,
   IconPalette,
   IconServerOff,
   IconSettings,
   IconTool,
   IconUserCog,
   IconUserOff,
-  IconUsers,
+  IconSword,
+  IconUser,
+  IconApps,
 } from '@tabler/icons-react'
 import { AudioWaveform, Command, GalleryVerticalEnd } from 'lucide-react'
 import { type SidebarData } from '../types'
 
 export const sidebarData: SidebarData = {
   user: {
-    name: 'satnaing',
-    email: 'satnaingdev@gmail.com',
+    name: 'Karasu',
+    email: 'karasu@karasu256.com',
     avatar: '/avatars/shadcn.jpg',
   },
   teams: [
     {
-      name: 'Shadcn Admin',
+      name: 'Karasu Lab Admin',
       logo: Command,
       plan: 'Vite + ShadcnUI',
     },
@@ -54,28 +53,27 @@ export const sidebarData: SidebarData = {
           url: '/',
           icon: IconLayoutDashboard,
         },
-        {
-          title: 'Tasks',
-          url: '/tasks',
-          icon: IconChecklist,
-        },
-        {
-          title: 'Apps',
-          url: '/apps',
-          icon: IconPackages,
-        },
-        {
-          title: 'Chats',
-          url: '/chats',
-          badge: '3',
-          icon: IconMessages,
-        },
-        {
-          title: 'Users',
-          url: '/users',
-          icon: IconUsers,
-        },
       ],
+    },
+    {
+      'title': 'Genshin Imact Wiki',
+      items: [
+        {
+          title: 'Characters',
+          url: '/characters',
+          icon: IconUser,
+        },
+        {
+          title: 'Weapons',
+          url: '/weapons',
+          icon: IconSword,
+        },
+        {
+          title: 'Artifacts',
+          url: '/artifacts',
+          icon: IconApps,
+        },
+      ]
     },
     {
       title: 'Pages',
