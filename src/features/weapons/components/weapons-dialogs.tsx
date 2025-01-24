@@ -50,7 +50,7 @@ export function WeaponsDialogs() {
                 setCurrentRow(null)
               }, 500)
               toast({
-                title: 'The following task has been deleted:',
+                title: 'The following weapon has been deleted:',
                 description: (
                   <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
                     <code className='text-white'>
@@ -61,10 +61,10 @@ export function WeaponsDialogs() {
               })
             }}
             className='max-w-md'
-            title={`Delete this task: ${currentRow.id} ?`}
+            title={`Delete this weapon: ${currentRow.id} ?`}
             desc={
               <>
-                You are about to delete a task with the ID{' '}
+                You are about to delete a weapon with the ID{' '}
                 <strong>{currentRow.id}</strong>. <br />
                 This action cannot be undone.
               </>

@@ -41,6 +41,7 @@ const weaponsSchema = z.object({
   type: z.string(),
   mainStat: z.string(),
   subStat: z.string(),
+  icon_url: z.string().url().optional(),
   version: z.string(),
 })
 type WeaponsForm = z.infer<typeof weaponsSchema>
@@ -135,6 +136,19 @@ export function WeaponsMutateDrawer({ open, onOpenChange, currentRow }: Props) {
                   <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder='Enter a Description' />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='icon_url'
+              render={({ field }) => (
+                <FormItem className='space-y-1'>
+                  <FormLabel>Icon URL</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder='Enter a Icon URL' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

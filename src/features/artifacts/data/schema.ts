@@ -9,6 +9,7 @@ export const artifactSchema = z.object({
   oneseteffect: z.string(),
   twoseteffect: z.string(),
   fourseteffect: z.string(),
+  icon_url: z.string().url().optional(),
   version: z.string(),
 })
 

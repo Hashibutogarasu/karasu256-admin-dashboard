@@ -32,7 +32,7 @@ export const useWeapons = () => {
   const weaponsContext = React.useContext(WeaponsContext)
 
   if (!weaponsContext) {
-    throw new Error('useTasks has to be used within <WeaponsContext>')
+    throw new Error('useWeapons has to be used within <WeaponsContext>')
   }
 
   return weaponsContext

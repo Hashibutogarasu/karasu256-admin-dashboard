@@ -71,6 +71,21 @@ export const columns: ColumnDef<Weapon>[] = [
     },
   },
   {
+    accessorKey: 'icon_url',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='Icon URL' />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className='flex space-x-2'>
+          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
+            {row.getValue('icon_url')}
+          </span>
+        </div>
+      )
+    },
+  },
+  {
     accessorKey: 'effect',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Effect' />
@@ -126,9 +141,9 @@ export const columns: ColumnDef<Weapon>[] = [
       return (
         <div className='flex space-x-2'>
           {version && <Badge variant='outline'>{version.label}</Badge>}
-          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
+          {/* <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
             {row.getValue('version')}
-          </span>
+          </span> */}
         </div>
       )
     },

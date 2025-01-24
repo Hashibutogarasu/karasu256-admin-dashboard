@@ -70,6 +70,17 @@ export const columns: ColumnDef<Artifact>[] = [
     ),
   },
   {
+    accessorKey: 'icon_url',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='Icon URL' />
+    ),
+    cell: ({ row }) => (
+      <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
+        {row.getValue('icon_url')}
+      </span>
+    ),
+  },
+  {
     accessorKey: 'oneseteffect',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='One set effect' />
@@ -134,9 +145,9 @@ export const columns: ColumnDef<Artifact>[] = [
       return (
         <div className='flex space-x-2'>
           {version && <Badge variant='outline'>{version.label}</Badge>}
-          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
+          {/* <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
             {row.getValue('version')}
-          </span>
+          </span> */}
         </div>
       )
     },

@@ -53,6 +53,11 @@ export const sidebarData: SidebarData = {
           url: '/',
           icon: IconLayoutDashboard,
         },
+        {
+          title: 'Authenicated Apps',
+          url: '/apps',
+          icon: IconApps,
+        }
       ],
     },
     {

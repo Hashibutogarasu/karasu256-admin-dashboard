@@ -39,6 +39,7 @@ const artifactsSchema = z.object({
   oneseteffect: z.string(),
   twoseteffect: z.string(),
   fourseteffect: z.string(),
+  icon_url: z.string().url().optional(),
   version: z.string(),
 })
 type ArtifactsForm = z.infer<typeof artifactsSchema>
@@ -55,6 +56,7 @@ export function ArtifactsMutateDrawer({ open, onOpenChange, currentRow }: Props)
       twoseteffect: '',
       fourseteffect: '',
       description: '',
+      icon_url: '',
       version: '1.0',
     },
   })
@@ -112,6 +114,32 @@ export function ArtifactsMutateDrawer({ open, onOpenChange, currentRow }: Props)
             />
             <FormField
               control={form.control}
+              name='description'
+              render={({ field }) => (
+                <FormItem className='space-y-1'>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder='Enter a Description' />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='icon_url'
+              render={({ field }) => (
+                <FormItem className='space-y-1'>
+                  <FormLabel>Icon URL</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder='Enter a Icon URL' />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name='oneseteffect'
               render={({ field }) => (
                 <FormItem className='space-y-1'>
@@ -149,20 +177,6 @@ export function ArtifactsMutateDrawer({ open, onOpenChange, currentRow }: Props)
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name='description'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Description' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             <FormField
               control={form.control}
               name='version'

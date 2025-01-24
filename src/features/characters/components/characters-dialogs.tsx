@@ -9,13 +9,13 @@ export function CharactersDialogs() {
   return (
     <>
       <CharacterMutateDrawer
-        key='task-create'
+        key='character-create'
         open={open === 'create'}
         onOpenChange={() => setOpen('create')}
       />
 
       <CharactersImportDialog
-        key='tasks-import'
+        key='character-import'
         open={open === 'import'}
         onOpenChange={() => setOpen('import')}
       />
@@ -23,7 +23,7 @@ export function CharactersDialogs() {
       {currentRow && (
         <>
           <CharacterMutateDrawer
-            key={`task-update-${currentRow.id}`}
+            key={`character-update-${currentRow.id}`}
             open={open === 'update'}
             onOpenChange={() => {
               setOpen('update')
@@ -35,7 +35,7 @@ export function CharactersDialogs() {
           />
 
           <ConfirmDialog
-            key='task-delete'
+            key='character-delete'
             destructive
             open={open === 'delete'}
             onOpenChange={() => {
@@ -50,7 +50,7 @@ export function CharactersDialogs() {
                 setCurrentRow(null)
               }, 500)
               toast({
-                title: 'The following task has been deleted:',
+                title: 'The following character has been deleted:',
                 description: (
                   <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
                     <code className='text-white'>
@@ -61,10 +61,10 @@ export function CharactersDialogs() {
               })
             }}
             className='max-w-md'
-            title={`Delete this task: ${currentRow.id} ?`}
+            title={`Delete this character: ${currentRow.id} ?`}
             desc={
               <>
-                You are about to delete a task with the ID{' '}
+                You are about to delete a character with the ID{' '}
                 <strong>{currentRow.id}</strong>. <br />
                 This action cannot be undone.
               </>

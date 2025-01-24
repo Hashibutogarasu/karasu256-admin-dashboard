@@ -38,6 +38,7 @@ const formSchema = z.object({
   weapontype: z.string(),
   element: z.string(),
   country: z.string(),
+  icon_url: z.string().url().optional(),
   version: z.string(),
 })
 type CharactersForm = z.infer<typeof formSchema>
@@ -53,6 +54,7 @@ export function CharacterMutateDrawer({ open, onOpenChange, currentRow }: Props)
       weapontype: '',
       element: '',
       country: '',
+      icon_url: '',
       version: '',
     },
   })
@@ -116,6 +118,19 @@ export function CharacterMutateDrawer({ open, onOpenChange, currentRow }: Props)
                   <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder='Enter a description' />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='icon_url'
+              render={({ field }) => (
+                <FormItem className='space-y-1'>
+                  <FormLabel>Icon URL</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder='Enter a Icon URL' />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

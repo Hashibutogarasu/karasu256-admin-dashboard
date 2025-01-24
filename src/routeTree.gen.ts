@@ -437,6 +437,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCharactersIndexLazyImport
       parentRoute: typeof AuthenticatedRouteImport
     }
+    '/_authenticated/weapons/': {
+      id: '/_authenticated/weapons/'
+      path: '/weapons'
+      fullPath: '/weapons'
+      preLoaderRoute: typeof AuthenticatedWeaponsIndexLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
     '/_authenticated/help-center/': {
       id: '/_authenticated/help-center/'
       path: '/help-center'
@@ -458,13 +465,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUsersIndexLazyImport
       parentRoute: typeof AuthenticatedRouteImport
     }
-    '/_authenticated/weapons/': {
-      id: '/_authenticated/weapons/'
-      path: '/weapons'
-      fullPath: '/weapons'
-      preLoaderRoute: typeof AuthenticatedWeaponsIndexLazyImport
-      parentRoute: typeof AuthenticatedRouteImport
-    }
   }
 }
 
@@ -479,17 +479,17 @@ interface AuthenticatedSettingsRouteLazyRouteChildren {
 }
 
 const AuthenticatedSettingsRouteLazyRouteChildren: AuthenticatedSettingsRouteLazyRouteChildren =
-  {
-    AuthenticatedSettingsAccountLazyRoute:
-      AuthenticatedSettingsAccountLazyRoute,
-    AuthenticatedSettingsAppearanceLazyRoute:
-      AuthenticatedSettingsAppearanceLazyRoute,
-    AuthenticatedSettingsDisplayLazyRoute:
-      AuthenticatedSettingsDisplayLazyRoute,
-    AuthenticatedSettingsNotificationsLazyRoute:
-      AuthenticatedSettingsNotificationsLazyRoute,
-    AuthenticatedSettingsIndexLazyRoute: AuthenticatedSettingsIndexLazyRoute,
-  }
+{
+  AuthenticatedSettingsAccountLazyRoute:
+    AuthenticatedSettingsAccountLazyRoute,
+  AuthenticatedSettingsAppearanceLazyRoute:
+    AuthenticatedSettingsAppearanceLazyRoute,
+  AuthenticatedSettingsDisplayLazyRoute:
+    AuthenticatedSettingsDisplayLazyRoute,
+  AuthenticatedSettingsNotificationsLazyRoute:
+    AuthenticatedSettingsNotificationsLazyRoute,
+  AuthenticatedSettingsIndexLazyRoute: AuthenticatedSettingsIndexLazyRoute,
+}
 
 const AuthenticatedSettingsRouteLazyRouteWithChildren =
   AuthenticatedSettingsRouteLazyRoute._addFileChildren(
@@ -597,90 +597,90 @@ export interface FileRoutesById {
   '/_authenticated/apps/': typeof AuthenticatedAppsIndexLazyRoute
   '/_authenticated/artifacts/': typeof AuthenticatedArtifactsIndexLazyRoute
   '/_authenticated/characters/': typeof AuthenticatedCharactersIndexLazyRoute
+  '/_authenticated/weapons/': typeof AuthenticatedWeaponsIndexLazyRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexLazyRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexLazyRoute
-  '/_authenticated/weapons/': typeof AuthenticatedWeaponsIndexLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | ''
-    | '/500'
-    | '/otp'
-    | '/sign-in'
-    | '/settings'
-    | '/forgot-password'
-    | '/sign-in-2'
-    | '/sign-up'
-    | '/401'
-    | '/403'
-    | '/404'
-    | '/503'
-    | '/'
-    | '/settings/account'
-    | '/settings/appearance'
-    | '/settings/display'
-    | '/settings/notifications'
-    | '/apps'
-    | '/artifacts'
-    | '/characters'
-    | '/help-center'
-    | '/settings/'
-    | '/users'
-    | '/weapons'
+  | ''
+  | '/500'
+  | '/otp'
+  | '/sign-in'
+  | '/settings'
+  | '/forgot-password'
+  | '/sign-in-2'
+  | '/sign-up'
+  | '/401'
+  | '/403'
+  | '/404'
+  | '/503'
+  | '/'
+  | '/settings/account'
+  | '/settings/appearance'
+  | '/settings/display'
+  | '/settings/notifications'
+  | '/apps'
+  | '/artifacts'
+  | '/characters'
+  | '/help-center'
+  | '/settings/'
+  | '/users'
+  | '/weapons'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/500'
-    | '/otp'
-    | '/sign-in'
-    | '/forgot-password'
-    | '/sign-in-2'
-    | '/sign-up'
-    | '/401'
-    | '/403'
-    | '/404'
-    | '/503'
-    | '/'
-    | '/settings/account'
-    | '/settings/appearance'
-    | '/settings/display'
-    | '/settings/notifications'
-    | '/apps'
-    | '/artifacts'
-    | '/characters'
-    | '/help-center'
-    | '/settings'
-    | '/users'
-    | '/weapons'
+  | '/500'
+  | '/otp'
+  | '/sign-in'
+  | '/forgot-password'
+  | '/sign-in-2'
+  | '/sign-up'
+  | '/401'
+  | '/403'
+  | '/404'
+  | '/503'
+  | '/'
+  | '/settings/account'
+  | '/settings/appearance'
+  | '/settings/display'
+  | '/settings/notifications'
+  | '/apps'
+  | '/artifacts'
+  | '/characters'
+  | '/weapons'
+  | '/help-center'
+  | '/settings'
+  | '/users'
   id:
-    | '__root__'
-    | '/_authenticated'
-    | '/(auth)/500'
-    | '/(auth)/otp'
-    | '/(auth)/sign-in'
-    | '/_authenticated/settings'
-    | '/(auth)/forgot-password'
-    | '/(auth)/sign-in-2'
-    | '/(auth)/sign-up'
-    | '/(errors)/401'
-    | '/(errors)/403'
-    | '/(errors)/404'
-    | '/(errors)/500'
-    | '/(errors)/503'
-    | '/_authenticated/'
-    | '/_authenticated/settings/account'
-    | '/_authenticated/settings/appearance'
-    | '/_authenticated/settings/display'
-    | '/_authenticated/settings/notifications'
-    | '/_authenticated/apps/'
-    | '/_authenticated/artifacts/'
-    | '/_authenticated/characters/'
-    | '/_authenticated/help-center/'
-    | '/_authenticated/settings/'
-    | '/_authenticated/users/'
-    | '/_authenticated/weapons/'
+  | '__root__'
+  | '/_authenticated'
+  | '/(auth)/500'
+  | '/(auth)/otp'
+  | '/(auth)/sign-in'
+  | '/_authenticated/settings'
+  | '/(auth)/forgot-password'
+  | '/(auth)/sign-in-2'
+  | '/(auth)/sign-up'
+  | '/(errors)/401'
+  | '/(errors)/403'
+  | '/(errors)/404'
+  | '/(errors)/500'
+  | '/(errors)/503'
+  | '/_authenticated/'
+  | '/_authenticated/settings/account'
+  | '/_authenticated/settings/appearance'
+  | '/_authenticated/settings/display'
+  | '/_authenticated/settings/notifications'
+  | '/_authenticated/apps/'
+  | '/_authenticated/artifacts/'
+  | '/_authenticated/characters/'
+  | '/_authenticated/help-center/'
+  | '/_authenticated/settings/'
+  | '/_authenticated/users/'
+  | '/_authenticated/weapons/'
   fileRoutesById: FileRoutesById
 }
 
