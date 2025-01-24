@@ -25,6 +25,7 @@ import {
 import { SelectDropdown } from '@/components/select-dropdown'
 import { Weapon } from '../data/schema'
 import { versions } from '../data/data'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 interface Props {
   open: boolean
@@ -87,178 +88,180 @@ export function WeaponsMutateDrawer({ open, onOpenChange, currentRow }: Props) {
       }}
     >
       <SheetContent className='flex flex-col'>
-        <SheetHeader className='text-left'>
-          <SheetTitle>{isUpdate ? 'Update' : 'Create'} Artifact</SheetTitle>
-          <SheetDescription>
-            {isUpdate
-              ? 'Update the artifact by providing necessary info.'
-              : 'Add a new artifact by providing necessary info.'}
-            Click save when you&apos;re done.
-          </SheetDescription>
-        </SheetHeader>
-        <Form {...form}>
-          <form
-            id='tasks-form'
-            onSubmit={form.handleSubmit(onSubmit)}
-            className='space-y-5 flex-1'
-          >
-            <FormField
-              control={form.control}
-              name='name'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Name' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='id'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>One set effect</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a One Set Effect' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='description'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Description' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='icon_url'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Icon URL</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Icon URL' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='effect'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Two set effect</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Two Set Effect' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='type'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Type</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Type' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='mainStat'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Main Stat</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Main Stat' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='subStat'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Sub Stat</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Sub Stat' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='rarity'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Rarity</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Rarity' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='description'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Description' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        <ScrollArea type='hover' className='h-100 pr-1'>
+          <SheetHeader className='text-left'>
+            <SheetTitle>{isUpdate ? 'Update' : 'Create'} Artifact</SheetTitle>
+            <SheetDescription>
+              {isUpdate
+                ? 'Update the artifact by providing necessary info.'
+                : 'Add a new artifact by providing necessary info.'}
+              Click save when you&apos;re done.
+            </SheetDescription>
+          </SheetHeader>
+          <Form {...form}>
+            <form
+              id='tasks-form'
+              onSubmit={form.handleSubmit(onSubmit)}
+              className='space-y-5 flex-1'
+            >
+              <FormField
+                control={form.control}
+                name='name'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a Name' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='id'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>One set effect</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a One Set Effect' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='description'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a Description' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='icon_url'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Icon URL</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a Icon URL' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='effect'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Two set effect</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a Two Set Effect' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='type'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Type</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a Type' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='mainStat'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Main Stat</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a Main Stat' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='subStat'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Sub Stat</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a Sub Stat' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='rarity'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Rarity</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a Rarity' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='description'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a Description' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name='version'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Version</FormLabel>
-                  <SelectDropdown
-                    defaultValue={field.value}
-                    onValueChange={field.onChange}
-                    placeholder='Select dropdown'
-                    items={versions}
-                  />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
-        <SheetFooter className='gap-2'>
-          <SheetClose asChild>
-            <Button variant='outline'>Close</Button>
-          </SheetClose>
-          <Button form='tasks-form' type='submit'>
-            Save changes
-          </Button>
-        </SheetFooter>
+              <FormField
+                control={form.control}
+                name='version'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Version</FormLabel>
+                    <SelectDropdown
+                      defaultValue={field.value}
+                      onValueChange={field.onChange}
+                      placeholder='Select dropdown'
+                      items={versions}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </form>
+          </Form>
+          <SheetFooter className='gap-2'>
+            <SheetClose asChild>
+              <Button variant='outline'>Close</Button>
+            </SheetClose>
+            <Button form='tasks-form' type='submit'>
+              Save changes
+            </Button>
+          </SheetFooter>
+        </ScrollArea>
       </SheetContent>
     </Sheet>
   )

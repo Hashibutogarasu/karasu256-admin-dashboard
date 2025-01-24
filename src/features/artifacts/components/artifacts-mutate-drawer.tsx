@@ -25,6 +25,7 @@ import {
 import { SelectDropdown } from '@/components/select-dropdown'
 import { Artifact } from '../data/schema'
 import { versions } from '@/components/data-table/data'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 interface Props {
   open: boolean
@@ -84,125 +85,127 @@ export function ArtifactsMutateDrawer({ open, onOpenChange, currentRow }: Props)
       }}
     >
       <SheetContent className='flex flex-col'>
-        <SheetHeader className='text-left'>
-          <SheetTitle>{isUpdate ? 'Update' : 'Create'} Artifact</SheetTitle>
-          <SheetDescription>
-            {isUpdate
-              ? 'Update the artifact by providing necessary info.'
-              : 'Add a new artifact by providing necessary info.'}
-            Click save when you&apos;re done.
-          </SheetDescription>
-        </SheetHeader>
-        <Form {...form}>
-          <form
-            id='artifacts-form'
-            onSubmit={form.handleSubmit(onSubmit)}
-            className='space-y-5 flex-1'
-          >
-            <FormField
-              control={form.control}
-              name='name'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Name' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='description'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Description' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='icon_url'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Icon URL</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Icon URL' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='oneseteffect'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>One set effect</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a One Set Effect' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='twoseteffect'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Two set effect</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Two Set Effect' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='fourseteffect'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Four set effect</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a Four Set Effect' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='version'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>Version</FormLabel>
-                  <SelectDropdown
-                    defaultValue={field.value}
-                    onValueChange={field.onChange}
-                    placeholder='Select dropdown'
-                    items={versions}
-                  />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
-        <SheetFooter className='gap-2'>
-          <SheetClose asChild>
-            <Button variant='outline'>Close</Button>
-          </SheetClose>
-          <Button form='artifacts-form' type='submit'>
-            Save changes
-          </Button>
-        </SheetFooter>
+        <ScrollArea type='hover' className='h-100 pr-1'>
+          <SheetHeader className='text-left'>
+            <SheetTitle>{isUpdate ? 'Update' : 'Create'} Artifact</SheetTitle>
+            <SheetDescription>
+              {isUpdate
+                ? 'Update the artifact by providing necessary info.'
+                : 'Add a new artifact by providing necessary info.'}
+              Click save when you&apos;re done.
+            </SheetDescription>
+          </SheetHeader>
+          <Form {...form}>
+            <form
+              id='artifacts-form'
+              onSubmit={form.handleSubmit(onSubmit)}
+              className='space-y-5 flex-1'
+            >
+              <FormField
+                control={form.control}
+                name='name'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a Name' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='description'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a Description' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='icon_url'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Icon URL</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a Icon URL' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='oneseteffect'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>One set effect</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a One Set Effect' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='twoseteffect'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Two set effect</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a Two Set Effect' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='fourseteffect'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Four set effect</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a Four Set Effect' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='version'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Version</FormLabel>
+                    <SelectDropdown
+                      defaultValue={field.value}
+                      onValueChange={field.onChange}
+                      placeholder='Select dropdown'
+                      items={versions}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </form>
+          </Form>
+          <SheetFooter className='gap-2'>
+            <SheetClose asChild>
+              <Button variant='outline'>Close</Button>
+            </SheetClose>
+            <Button form='artifacts-form' type='submit'>
+              Save changes
+            </Button>
+          </SheetFooter>
+        </ScrollArea>
       </SheetContent>
     </Sheet>
   )
