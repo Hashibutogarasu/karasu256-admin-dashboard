@@ -80,13 +80,13 @@ export function CharactersImportDialog({ open, onOpenChange }: Props) {
     >
       <DialogContent className='sm:max-w-sm gap-2'>
         <DialogHeader className='text-left'>
-          <DialogTitle>Import Tasks</DialogTitle>
+          <DialogTitle>Import Characters</DialogTitle>
           <DialogDescription>
-            Import tasks quickly from a CSV file.
+            Import characters quickly from a CSV file.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form id='task-import-form' onSubmit={form.handleSubmit(onSubmit)}>
+          <form id='character-import-form' onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name='file'

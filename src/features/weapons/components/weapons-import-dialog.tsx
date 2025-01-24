@@ -80,13 +80,13 @@ export function WeaponsImportDialog({ open, onOpenChange }: Props) {
     >
       <DialogContent className='sm:max-w-sm gap-2'>
         <DialogHeader className='text-left'>
-          <DialogTitle>Import Tasks</DialogTitle>
+          <DialogTitle>Import Weapons</DialogTitle>
           <DialogDescription>
-            Import tasks quickly from a CSV file.
+            Import weapons quickly from a CSV file.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form id='task-import-form' onSubmit={form.handleSubmit(onSubmit)}>
+          <form id='wepom-import-form' onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name='file'

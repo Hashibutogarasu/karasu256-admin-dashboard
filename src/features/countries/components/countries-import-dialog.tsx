@@ -80,13 +80,13 @@ export function CountriesImportDialog({ open, onOpenChange }: Props) {
     >
       <DialogContent className='sm:max-w-sm gap-2'>
         <DialogHeader className='text-left'>
-          <DialogTitle>Import Tasks</DialogTitle>
+          <DialogTitle>Import Countries</DialogTitle>
           <DialogDescription>
-            Import tasks quickly from a CSV file.
+            Import countries quickly from a CSV file.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form id='task-import-form' onSubmit={form.handleSubmit(onSubmit)}>
+          <form id='country-import-form' onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name='file'
