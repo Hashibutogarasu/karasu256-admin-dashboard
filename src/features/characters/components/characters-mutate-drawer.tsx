@@ -26,6 +26,7 @@ import { SelectDropdown } from '@/components/select-dropdown'
 import { Character } from '../data/schema'
 import { versions } from '@/components/data-table/data'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { elements, weapons } from '../data/data'
 
 interface Props {
   open: boolean
@@ -85,7 +86,7 @@ export function CharacterMutateDrawer({ open, onOpenChange, currentRow }: Props)
       <SheetContent className='flex flex-col'>
         <ScrollArea type='hover' className='h-100 pr-1'>
           <SheetHeader className='text-left'>
-            <SheetTitle>{isUpdate ? 'Update' : 'Create'} Task</SheetTitle>
+            <SheetTitle>{isUpdate ? 'Update' : 'Create'} Character</SheetTitle>
             <SheetDescription>
               {isUpdate
                 ? 'Update the task by providing necessary info.'
@@ -104,7 +105,7 @@ export function CharacterMutateDrawer({ open, onOpenChange, currentRow }: Props)
                 name='name'
                 render={({ field }) => (
                   <FormItem className='space-y-1'>
-                    <FormLabel>Title</FormLabel>
+                    <FormLabel>Name</FormLabel>
                     <FormControl>
                       <Input {...field} placeholder='Enter a title' />
                     </FormControl>
@@ -144,9 +145,12 @@ export function CharacterMutateDrawer({ open, onOpenChange, currentRow }: Props)
                 render={({ field }) => (
                   <FormItem className='space-y-1'>
                     <FormLabel>Weapon Type</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder='Enter a weapon type' />
-                    </FormControl>
+                    <SelectDropdown
+                      defaultValue={field.value}
+                      onValueChange={field.onChange}
+                      placeholder='Select dropdown'
+                      items={weapons}
+                    />
                     <FormMessage />
                   </FormItem>
                 )}
@@ -157,9 +161,12 @@ export function CharacterMutateDrawer({ open, onOpenChange, currentRow }: Props)
                 render={({ field }) => (
                   <FormItem className='space-y-1'>
                     <FormLabel>Element</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder='Enter an element' />
-                    </FormControl>
+                    <SelectDropdown
+                      defaultValue={field.value}
+                      onValueChange={field.onChange}
+                      placeholder='Select dropdown'
+                      items={elements}
+                    />
                     <FormMessage />
                   </FormItem>
                 )}

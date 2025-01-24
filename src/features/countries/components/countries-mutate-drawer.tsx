@@ -77,7 +77,7 @@ export function CountriesMutateDrawer({ open, onOpenChange, currentRow }: Props)
     >
       <SheetContent className='flex flex-col'>
         <SheetHeader className='text-left'>
-          <SheetTitle>{isUpdate ? 'Update' : 'Create'} Artifact</SheetTitle>
+          <SheetTitle>{isUpdate ? 'Update' : 'Create'} Country</SheetTitle>
           <SheetDescription>
             {isUpdate
               ? 'Update the artifact by providing necessary info.'

@@ -57,7 +57,7 @@ export function WeaponsMutateDrawer({ open, onOpenChange, currentRow }: Props) {
       name: '',
       description: '',
       effect: '',
-      rarity: 0,
+      rarity: 1,
       type: '',
       mainStat: '',
       subStat: '',
@@ -90,7 +90,7 @@ export function WeaponsMutateDrawer({ open, onOpenChange, currentRow }: Props) {
       <SheetContent className='flex flex-col'>
         <ScrollArea type='hover' className='h-100 pr-1'>
           <SheetHeader className='text-left'>
-            <SheetTitle>{isUpdate ? 'Update' : 'Create'} Artifact</SheetTitle>
+            <SheetTitle>{isUpdate ? 'Update' : 'Create'} Weapon</SheetTitle>
             <SheetDescription>
               {isUpdate
                 ? 'Update the artifact by providing necessary info.'
@@ -100,7 +100,7 @@ export function WeaponsMutateDrawer({ open, onOpenChange, currentRow }: Props) {
           </SheetHeader>
           <Form {...form}>
             <form
-              id='tasks-form'
+              id='weapons-form'
               onSubmit={form.handleSubmit(onSubmit)}
               className='space-y-5 flex-1'
             >
@@ -112,19 +112,6 @@ export function WeaponsMutateDrawer({ open, onOpenChange, currentRow }: Props) {
                     <FormLabel>Name</FormLabel>
                     <FormControl>
                       <Input {...field} placeholder='Enter a Name' />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name='id'
-                render={({ field }) => (
-                  <FormItem className='space-y-1'>
-                    <FormLabel>One set effect</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder='Enter a One Set Effect' />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -161,9 +148,22 @@ export function WeaponsMutateDrawer({ open, onOpenChange, currentRow }: Props) {
                 name='effect'
                 render={({ field }) => (
                   <FormItem className='space-y-1'>
-                    <FormLabel>Two set effect</FormLabel>
+                    <FormLabel>Effect</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder='Enter a Two Set Effect' />
+                      <Input {...field} placeholder='Enter a Effect' />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='rarity'
+                render={({ field }) => (
+                  <FormItem className='space-y-1'>
+                    <FormLabel>Rarity</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder='Enter a Rarity' />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -208,33 +208,6 @@ export function WeaponsMutateDrawer({ open, onOpenChange, currentRow }: Props) {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name='rarity'
-                render={({ field }) => (
-                  <FormItem className='space-y-1'>
-                    <FormLabel>Rarity</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder='Enter a Rarity' />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name='description'
-                render={({ field }) => (
-                  <FormItem className='space-y-1'>
-                    <FormLabel>Description</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder='Enter a Description' />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
               <FormField
                 control={form.control}
                 name='version'
