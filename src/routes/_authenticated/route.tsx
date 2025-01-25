@@ -19,7 +19,7 @@ export const Route = createFileRoute('/_authenticated')({
 
 function RouteComponent() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [attribute, setAttribute] = useState<FetchUserAttributesOutput>()
+  const [_, setAttribute] = useState<FetchUserAttributesOutput>()
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const verfier = useVerfier()
