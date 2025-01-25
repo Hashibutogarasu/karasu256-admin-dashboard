@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
 import { cn } from '@/lib/utils'
+import { toast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -15,36 +16,57 @@ import {
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { PinInput, PinInputField } from '@/components/pin-input'
+import {
+  CognitoUser
+} from 'amazon-cognito-identity-js'
+import { useCognito } from '@/hooks/use-cognito'
 
-type OtpFormProps = HTMLAttributes<HTMLDivElement> & {
-  onEnterCode?: (code: string) => void
-}
+type OtpFormProps = HTMLAttributes<HTMLDivElement>
 
 const formSchema = z.object({
-  otp: z.string().min(1, { message: 'Please enter your otp code.' }),
+  email: z.string().email({ message: 'Invalid email address' }),
+  code: z.string().min(1, { message: 'Please enter your code.' }),
 })
 
-export function OtpForm({ className, onEnterCode, ...props }: OtpFormProps) {
+export function ConfirmForm({ className, ...props }: OtpFormProps) {
   const navigate = useNavigate()
+  const userPool = useCognito()
+
   const [isLoading, setIsLoading] = useState(false)
   const [disabledBtn, setDisabledBtn] = useState(true)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { otp: '' },
+    defaultValues: { code: '' },
   })
 
   function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
 
-    if (onEnterCode) {
-      onEnterCode(data.otp)
-    }
+    const user = new CognitoUser({
+      Username: data.email,
+      Pool: userPool
+    })
 
-    setTimeout(() => {
-      setIsLoading(false)
-      navigate({ to: '/' })
-    }, 1000)
+    user.confirmRegistration(data.code, true, function (err) {
+      if (err) {
+        toast({
+          title: 'Error',
+          description: err.message || 'An error occurred.',
+        })
+        setIsLoading(false)
+        return
+      }
+
+      toast({
+        title: 'Success',
+        description: 'Your account has been verified.',
+      })
+      setTimeout(() => {
+        setIsLoading(false)
+        navigate({ to: '/sign-in' })
+      }, 1000)
+    })
   }
 
   return (
@@ -54,7 +76,23 @@ export function OtpForm({ className, onEnterCode, ...props }: OtpFormProps) {
           <div className='grid gap-2'>
             <FormField
               control={form.control}
-              name='otp'
+              name='email'
+              render={({ field }) => (
+                <FormItem className='space-y-1'>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder='Email'
+                      className={`${form.getFieldState('email').invalid ? 'border-red-500' : ''}`}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='code'
               render={({ field }) => (
                 <FormItem className='space-y-1'>
                   <FormControl>
@@ -71,7 +109,7 @@ export function OtpForm({ className, onEnterCode, ...props }: OtpFormProps) {
                           <PinInputField
                             key={i}
                             component={Input}
-                            className={`${form.getFieldState('otp').invalid ? 'border-red-500' : ''}`}
+                            className={`${form.getFieldState('code').invalid ? 'border-red-500' : ''}`}
                           />
                         )
                       })}

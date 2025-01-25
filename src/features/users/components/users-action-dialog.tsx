@@ -27,6 +27,7 @@ import { PasswordInput } from '@/components/password-input'
 import { SelectDropdown } from '@/components/select-dropdown'
 import { userTypes } from '../data/data'
 import { User } from '../data/schema'
+import { useUserProfile } from '@/hooks/use-user-profile'
 
 const formSchema = z
   .object({
@@ -95,6 +96,8 @@ interface Props {
 }
 
 export function UsersActionDialog({ currentRow, open, onOpenChange }: Props) {
+  const user = useUserProfile()
+
   const isEdit = !!currentRow
   const form = useForm<UserForm>({
     resolver: zodResolver(formSchema),
@@ -225,7 +228,7 @@ export function UsersActionDialog({ currentRow, open, onOpenChange }: Props) {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder='karasu@karasu256.com'
+                        placeholder={user?.email}
                         className='col-span-4'
                         {...field}
                       />

@@ -14,6 +14,44 @@ import { ThemeProvider } from './context/theme-context'
 import './index.css'
 // Generated Routes
 import { routeTree } from './routeTree.gen'
+import { Amplify } from 'aws-amplify'
+import { Authenticator } from '@aws-amplify/ui-react'
+
+const USER_POOL_ID = import.meta.env.VITE_USER_POOL_ID
+const USER_POOL_CLIENT_ID = import.meta.env.VITE_USER_POOL_CLIENT_ID
+const VITE_BASE_URL = import.meta.env.VITE_BASE_URL
+const VITE_AUTH_DOMAIN = import.meta.env.VITE_AUTH_DOMAIN
+
+Amplify.configure({
+  Auth: {
+    Cognito: {
+      userAttributes: {
+        email: {
+          required: true,
+        },
+        nickname: {
+          required: false,
+        },
+        picture: {
+          required: false,
+        },
+      },
+      userPoolId: USER_POOL_ID!,
+      userPoolClientId: USER_POOL_CLIENT_ID!,
+      loginWith: {
+        email: true,
+        oauth: {
+          domain: `${VITE_AUTH_DOMAIN}`,
+          providers: ['Google'],
+          scopes: ['email', 'openid', 'profile'],
+          redirectSignIn: [`${VITE_BASE_URL}/sign-in`],
+          redirectSignOut: [`${VITE_BASE_URL}/sign-out`],
+          responseType: 'code'
+        }
+      }
+    },
+  }
+})
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -98,7 +136,9 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider defaultTheme='light' storageKey='vite-ui-theme'>
-          <RouterProvider router={router} />
+          <Authenticator.Provider>
+            <RouterProvider router={router} />
+          </Authenticator.Provider>
         </ThemeProvider>
       </QueryClientProvider>
     </StrictMode>

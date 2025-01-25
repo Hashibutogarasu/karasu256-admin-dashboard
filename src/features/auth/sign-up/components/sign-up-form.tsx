@@ -2,7 +2,6 @@ import { HTMLAttributes, useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { IconBrandGoogle } from '@tabler/icons-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
@@ -15,6 +14,12 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/password-input'
+import {
+  CognitoUserAttribute,
+} from 'amazon-cognito-identity-js'
+import { toast } from '@/hooks/use-toast'
+import { Link, useRouter } from '@tanstack/react-router'
+import { useCognito } from '@/hooks/use-cognito'
 
 type SignUpFormProps = HTMLAttributes<HTMLDivElement>
 
@@ -42,6 +47,8 @@ const formSchema = z
 
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
+  const userPool = useCognito()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -54,8 +61,28 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 
   function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
-    // eslint-disable-next-line no-console
-    console.log(data)
+
+    userPool.signUp(data.email, data.password, [
+      new CognitoUserAttribute({
+        Name: 'nickname',
+        Value: data.nickname
+      }),
+    ], [], (err) => {
+      if (err) {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: err.message || JSON.stringify(err),
+        })
+      } else {
+        toast({
+          variant: 'default',
+          title: 'Success',
+          description: 'User created successfully',
+        })
+        router.navigate({ to: '/confirm' })
+      }
+    })
 
     setTimeout(() => {
       setIsLoading(false)
@@ -133,20 +160,15 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
                 </span>
               </div>
             </div>
-
-            <div className='flex items-center gap-2'>
-              <Button
-                variant='outline'
-                className='w-full'
-                type='button'
-                disabled={isLoading}
-              >
-                <IconBrandGoogle className='h-4 w-4' /> Google
-              </Button>
-            </div>
           </div>
         </form>
       </Form>
+      <div className='text-center'>
+        Already have an account?
+        <Link to='/sign-in' className='text-sm font-medium text-muted-foreground hover:opacity-75 underline'>
+          Sign in
+        </Link>
+      </div>
     </div>
   )
 }

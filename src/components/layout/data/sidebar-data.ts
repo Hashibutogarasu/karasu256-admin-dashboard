@@ -2,7 +2,6 @@ import {
   IconBrowserCheck,
   IconHelp,
   IconLayoutDashboard,
-  IconLockAccess,
   IconNotification,
   IconPalette,
   IconSettings,
@@ -13,32 +12,9 @@ import {
   IconApps,
   IconWorld,
 } from '@tabler/icons-react'
-import { AudioWaveform, Command, GalleryVerticalEnd } from 'lucide-react'
 import { type SidebarData } from '../types'
 
 export const sidebarData: SidebarData = {
-  user: {
-    name: 'Karasu',
-    email: 'karasu@karasu256.com',
-    avatar: '/avatars/shadcn.jpg',
-  },
-  teams: [
-    {
-      name: 'Karasu Lab Admin',
-      logo: Command,
-      plan: 'Vite + ShadcnUI',
-    },
-    {
-      name: 'Acme Inc',
-      logo: GalleryVerticalEnd,
-      plan: 'Enterprise',
-    },
-    {
-      name: 'Acme Corp.',
-      logo: AudioWaveform,
-      plan: 'Startup',
-    },
-  ],
   navGroups: [
     {
       title: 'General',
@@ -48,11 +24,6 @@ export const sidebarData: SidebarData = {
           url: '/',
           icon: IconLayoutDashboard,
         },
-        {
-          title: 'Authenicated Apps',
-          url: '/apps',
-          icon: IconApps,
-        }
       ],
     },
     {
@@ -79,37 +50,6 @@ export const sidebarData: SidebarData = {
           icon: IconWorld,
         },
       ]
-    },
-    {
-      title: 'Pages',
-      items: [
-        {
-          title: 'Auth',
-          icon: IconLockAccess,
-          items: [
-            {
-              title: 'Sign In',
-              url: '/sign-in',
-            },
-            {
-              title: 'Sign In (2 Col)',
-              url: '/sign-in-2',
-            },
-            {
-              title: 'Sign Up',
-              url: '/sign-up',
-            },
-            {
-              title: 'Forgot Password',
-              url: '/forgot-password',
-            },
-            {
-              title: 'OTP',
-              url: '/otp',
-            },
-          ],
-        },
-      ],
     },
     {
       title: 'Other',
