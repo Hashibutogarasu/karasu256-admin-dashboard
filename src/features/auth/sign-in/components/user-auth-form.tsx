@@ -127,7 +127,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               Login
             </Button>
 
-            <div className='relative my-2'>
+            {/* <div className='relative my-2'>
               <div className='absolute inset-0 flex items-center'>
                 <span className='w-full border-t' />
               </div>
@@ -136,7 +136,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                   Or continue with
                 </span>
               </div>
-            </div>
+            </div> */}
           </div>
         </form>
       </Form>

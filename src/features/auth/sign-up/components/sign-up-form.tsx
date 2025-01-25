@@ -150,7 +150,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
               Create Account
             </Button>
 
-            <div className='relative my-2'>
+            {/* <div className='relative my-2'>
               <div className='absolute inset-0 flex items-center'>
                 <span className='w-full border-t' />
               </div>
@@ -159,7 +159,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
                   Or continue with
                 </span>
               </div>
-            </div>
+            </div> */}
           </div>
         </form>
       </Form>
