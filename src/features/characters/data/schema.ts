@@ -9,6 +9,7 @@ export const characterSchema = z.object({
   weapontype: z.string(),
   element: z.string(),
   country: z.string(),
+  icon_url: z.string().url().optional(),
   version: z.string(),
 })
 

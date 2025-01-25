@@ -1,11 +1,10 @@
 import { ColumnDef } from '@tanstack/react-table'
-import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
-import { labels } from '../data/data'
 import { Character } from '../data/schema'
-import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
-import { versions } from '@/features/artifacts/data/data'
+import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
+import { versions } from '@/components/data-table/data'
+import { Badge } from '@/components/ui/badge'
 
 export const columns: ColumnDef<Character>[] = [
   {
@@ -47,11 +46,8 @@ export const columns: ColumnDef<Character>[] = [
       <DataTableColumnHeader column={column} title='Name' />
     ),
     cell: ({ row }) => {
-      const name = labels.find((name) => name.value === row.original.name)
-
       return (
         <div className='flex space-x-2'>
-          {name && <Badge variant='outline'>{name.label}</Badge>}
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
             {row.getValue('name')}
           </span>
@@ -69,6 +65,21 @@ export const columns: ColumnDef<Character>[] = [
         <div className='flex space-x-2'>
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
             {row.getValue('description')}
+          </span>
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: 'icon_url',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='Icon URL' />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className='flex space-x-2'>
+          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
+            {row.getValue('icon_url')}
           </span>
         </div>
       )
@@ -134,8 +145,8 @@ export const columns: ColumnDef<Character>[] = [
       }
 
       return (
-        <div className='flex w-[100px] items-center'>
-          <span>{version.label}</span>
+        <div className='flex space-x-2'>
+          {version && <Badge variant='outline'>{version.label}</Badge>}
         </div>
       )
     },

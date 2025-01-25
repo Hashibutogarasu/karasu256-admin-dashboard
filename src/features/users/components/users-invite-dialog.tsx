@@ -25,6 +25,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { SelectDropdown } from '@/components/select-dropdown'
 import { userTypes } from '../data/data'
+import { useUserProfile } from '@/hooks/use-user-profile'
 
 const formSchema = z.object({
   email: z
@@ -42,6 +43,8 @@ interface Props {
 }
 
 export function UsersInviteDialog({ open, onOpenChange }: Props) {
+  const user = useUserProfile()
+
   const form = useForm<UserInviteForm>({
     resolver: zodResolver(formSchema),
     defaultValues: { email: '', role: '', desc: '' },
@@ -93,7 +96,7 @@ export function UsersInviteDialog({ open, onOpenChange }: Props) {
                   <FormControl>
                     <Input
                       type='email'
-                      placeholder='eg: karasu@karasu256.com'
+                      placeholder={`eg: ${user?.email}`}
                       {...field}
                     />
                   </FormControl>

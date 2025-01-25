@@ -15,8 +15,11 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated/route'
 import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
+import { Route as authSignOutImport } from './routes/(auth)/sign-out'
 import { Route as authSignInImport } from './routes/(auth)/sign-in'
 import { Route as authOtpImport } from './routes/(auth)/otp'
+import { Route as authConfirmImport } from './routes/(auth)/confirm'
+import { Route as authCallbackImport } from './routes/(auth)/callback'
 import { Route as auth500Import } from './routes/(auth)/500'
 
 // Create Virtual Routes
@@ -45,6 +48,9 @@ const AuthenticatedSettingsIndexLazyImport = createFileRoute(
 )()
 const AuthenticatedHelpCenterIndexLazyImport = createFileRoute(
   '/_authenticated/help-center/',
+)()
+const AuthenticatedCountriesIndexLazyImport = createFileRoute(
+  '/_authenticated/countries/',
 )()
 const AuthenticatedCharactersIndexLazyImport = createFileRoute(
   '/_authenticated/characters/',
@@ -156,6 +162,12 @@ const AuthenticatedSettingsRouteLazyRoute =
     import('./routes/_authenticated/settings/route.lazy').then((d) => d.Route),
   )
 
+const authSignOutRoute = authSignOutImport.update({
+  id: '/(auth)/sign-out',
+  path: '/sign-out',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const authSignInRoute = authSignInImport.update({
   id: '/(auth)/sign-in',
   path: '/sign-in',
@@ -165,6 +177,18 @@ const authSignInRoute = authSignInImport.update({
 const authOtpRoute = authOtpImport.update({
   id: '/(auth)/otp',
   path: '/otp',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const authConfirmRoute = authConfirmImport.update({
+  id: '/(auth)/confirm',
+  path: '/confirm',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const authCallbackRoute = authCallbackImport.update({
+  id: '/(auth)/callback',
+  path: '/callback',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -210,6 +234,15 @@ const AuthenticatedHelpCenterIndexLazyRoute =
     import('./routes/_authenticated/help-center/index.lazy').then(
       (d) => d.Route,
     ),
+  )
+
+const AuthenticatedCountriesIndexLazyRoute =
+  AuthenticatedCountriesIndexLazyImport.update({
+    id: '/countries/',
+    path: '/countries/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/countries/index.lazy').then((d) => d.Route),
   )
 
 const AuthenticatedCharactersIndexLazyRoute =
@@ -304,6 +337,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof auth500Import
       parentRoute: typeof rootRoute
     }
+    '/(auth)/callback': {
+      id: '/(auth)/callback'
+      path: '/callback'
+      fullPath: '/callback'
+      preLoaderRoute: typeof authCallbackImport
+      parentRoute: typeof rootRoute
+    }
+    '/(auth)/confirm': {
+      id: '/(auth)/confirm'
+      path: '/confirm'
+      fullPath: '/confirm'
+      preLoaderRoute: typeof authConfirmImport
+      parentRoute: typeof rootRoute
+    }
     '/(auth)/otp': {
       id: '/(auth)/otp'
       path: '/otp'
@@ -316,6 +363,13 @@ declare module '@tanstack/react-router' {
       path: '/sign-in'
       fullPath: '/sign-in'
       preLoaderRoute: typeof authSignInImport
+      parentRoute: typeof rootRoute
+    }
+    '/(auth)/sign-out': {
+      id: '/(auth)/sign-out'
+      path: '/sign-out'
+      fullPath: '/sign-out'
+      preLoaderRoute: typeof authSignOutImport
       parentRoute: typeof rootRoute
     }
     '/_authenticated/settings': {
@@ -437,6 +491,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCharactersIndexLazyImport
       parentRoute: typeof AuthenticatedRouteImport
     }
+    '/_authenticated/countries/': {
+      id: '/_authenticated/countries/'
+      path: '/countries'
+      fullPath: '/countries'
+      preLoaderRoute: typeof AuthenticatedCountriesIndexLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
     '/_authenticated/help-center/': {
       id: '/_authenticated/help-center/'
       path: '/help-center'
@@ -502,6 +563,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAppsIndexLazyRoute: typeof AuthenticatedAppsIndexLazyRoute
   AuthenticatedArtifactsIndexLazyRoute: typeof AuthenticatedArtifactsIndexLazyRoute
   AuthenticatedCharactersIndexLazyRoute: typeof AuthenticatedCharactersIndexLazyRoute
+  AuthenticatedCountriesIndexLazyRoute: typeof AuthenticatedCountriesIndexLazyRoute
   AuthenticatedHelpCenterIndexLazyRoute: typeof AuthenticatedHelpCenterIndexLazyRoute
   AuthenticatedUsersIndexLazyRoute: typeof AuthenticatedUsersIndexLazyRoute
   AuthenticatedWeaponsIndexLazyRoute: typeof AuthenticatedWeaponsIndexLazyRoute
@@ -514,6 +576,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAppsIndexLazyRoute: AuthenticatedAppsIndexLazyRoute,
   AuthenticatedArtifactsIndexLazyRoute: AuthenticatedArtifactsIndexLazyRoute,
   AuthenticatedCharactersIndexLazyRoute: AuthenticatedCharactersIndexLazyRoute,
+  AuthenticatedCountriesIndexLazyRoute: AuthenticatedCountriesIndexLazyRoute,
   AuthenticatedHelpCenterIndexLazyRoute: AuthenticatedHelpCenterIndexLazyRoute,
   AuthenticatedUsersIndexLazyRoute: AuthenticatedUsersIndexLazyRoute,
   AuthenticatedWeaponsIndexLazyRoute: AuthenticatedWeaponsIndexLazyRoute,
@@ -525,8 +588,11 @@ const AuthenticatedRouteRouteWithChildren =
 export interface FileRoutesByFullPath {
   '': typeof AuthenticatedRouteRouteWithChildren
   '/500': typeof errors500LazyRoute
+  '/callback': typeof authCallbackRoute
+  '/confirm': typeof authConfirmRoute
   '/otp': typeof authOtpRoute
   '/sign-in': typeof authSignInRoute
+  '/sign-out': typeof authSignOutRoute
   '/settings': typeof AuthenticatedSettingsRouteLazyRouteWithChildren
   '/forgot-password': typeof authForgotPasswordLazyRoute
   '/sign-in-2': typeof authSignIn2LazyRoute
@@ -543,6 +609,7 @@ export interface FileRoutesByFullPath {
   '/apps': typeof AuthenticatedAppsIndexLazyRoute
   '/artifacts': typeof AuthenticatedArtifactsIndexLazyRoute
   '/characters': typeof AuthenticatedCharactersIndexLazyRoute
+  '/countries': typeof AuthenticatedCountriesIndexLazyRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/settings/': typeof AuthenticatedSettingsIndexLazyRoute
   '/users': typeof AuthenticatedUsersIndexLazyRoute
@@ -551,8 +618,11 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/500': typeof errors500LazyRoute
+  '/callback': typeof authCallbackRoute
+  '/confirm': typeof authConfirmRoute
   '/otp': typeof authOtpRoute
   '/sign-in': typeof authSignInRoute
+  '/sign-out': typeof authSignOutRoute
   '/forgot-password': typeof authForgotPasswordLazyRoute
   '/sign-in-2': typeof authSignIn2LazyRoute
   '/sign-up': typeof authSignUpLazyRoute
@@ -568,6 +638,7 @@ export interface FileRoutesByTo {
   '/apps': typeof AuthenticatedAppsIndexLazyRoute
   '/artifacts': typeof AuthenticatedArtifactsIndexLazyRoute
   '/characters': typeof AuthenticatedCharactersIndexLazyRoute
+  '/countries': typeof AuthenticatedCountriesIndexLazyRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/settings': typeof AuthenticatedSettingsIndexLazyRoute
   '/users': typeof AuthenticatedUsersIndexLazyRoute
@@ -578,8 +649,11 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/(auth)/500': typeof auth500Route
+  '/(auth)/callback': typeof authCallbackRoute
+  '/(auth)/confirm': typeof authConfirmRoute
   '/(auth)/otp': typeof authOtpRoute
   '/(auth)/sign-in': typeof authSignInRoute
+  '/(auth)/sign-out': typeof authSignOutRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRouteLazyRouteWithChildren
   '/(auth)/forgot-password': typeof authForgotPasswordLazyRoute
   '/(auth)/sign-in-2': typeof authSignIn2LazyRoute
@@ -597,6 +671,7 @@ export interface FileRoutesById {
   '/_authenticated/apps/': typeof AuthenticatedAppsIndexLazyRoute
   '/_authenticated/artifacts/': typeof AuthenticatedArtifactsIndexLazyRoute
   '/_authenticated/characters/': typeof AuthenticatedCharactersIndexLazyRoute
+  '/_authenticated/countries/': typeof AuthenticatedCountriesIndexLazyRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexLazyRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexLazyRoute
@@ -608,8 +683,11 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/500'
+    | '/callback'
+    | '/confirm'
     | '/otp'
     | '/sign-in'
+    | '/sign-out'
     | '/settings'
     | '/forgot-password'
     | '/sign-in-2'
@@ -626,6 +704,7 @@ export interface FileRouteTypes {
     | '/apps'
     | '/artifacts'
     | '/characters'
+    | '/countries'
     | '/help-center'
     | '/settings/'
     | '/users'
@@ -633,8 +712,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/500'
+    | '/callback'
+    | '/confirm'
     | '/otp'
     | '/sign-in'
+    | '/sign-out'
     | '/forgot-password'
     | '/sign-in-2'
     | '/sign-up'
@@ -650,6 +732,7 @@ export interface FileRouteTypes {
     | '/apps'
     | '/artifacts'
     | '/characters'
+    | '/countries'
     | '/help-center'
     | '/settings'
     | '/users'
@@ -658,8 +741,11 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_authenticated'
     | '/(auth)/500'
+    | '/(auth)/callback'
+    | '/(auth)/confirm'
     | '/(auth)/otp'
     | '/(auth)/sign-in'
+    | '/(auth)/sign-out'
     | '/_authenticated/settings'
     | '/(auth)/forgot-password'
     | '/(auth)/sign-in-2'
@@ -677,6 +763,7 @@ export interface FileRouteTypes {
     | '/_authenticated/apps/'
     | '/_authenticated/artifacts/'
     | '/_authenticated/characters/'
+    | '/_authenticated/countries/'
     | '/_authenticated/help-center/'
     | '/_authenticated/settings/'
     | '/_authenticated/users/'
@@ -687,8 +774,11 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   auth500Route: typeof auth500Route
+  authCallbackRoute: typeof authCallbackRoute
+  authConfirmRoute: typeof authConfirmRoute
   authOtpRoute: typeof authOtpRoute
   authSignInRoute: typeof authSignInRoute
+  authSignOutRoute: typeof authSignOutRoute
   authForgotPasswordLazyRoute: typeof authForgotPasswordLazyRoute
   authSignIn2LazyRoute: typeof authSignIn2LazyRoute
   authSignUpLazyRoute: typeof authSignUpLazyRoute
@@ -702,8 +792,11 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   auth500Route: auth500Route,
+  authCallbackRoute: authCallbackRoute,
+  authConfirmRoute: authConfirmRoute,
   authOtpRoute: authOtpRoute,
   authSignInRoute: authSignInRoute,
+  authSignOutRoute: authSignOutRoute,
   authForgotPasswordLazyRoute: authForgotPasswordLazyRoute,
   authSignIn2LazyRoute: authSignIn2LazyRoute,
   authSignUpLazyRoute: authSignUpLazyRoute,
@@ -726,8 +819,11 @@ export const routeTree = rootRoute
       "children": [
         "/_authenticated",
         "/(auth)/500",
+        "/(auth)/callback",
+        "/(auth)/confirm",
         "/(auth)/otp",
         "/(auth)/sign-in",
+        "/(auth)/sign-out",
         "/(auth)/forgot-password",
         "/(auth)/sign-in-2",
         "/(auth)/sign-up",
@@ -746,6 +842,7 @@ export const routeTree = rootRoute
         "/_authenticated/apps/",
         "/_authenticated/artifacts/",
         "/_authenticated/characters/",
+        "/_authenticated/countries/",
         "/_authenticated/help-center/",
         "/_authenticated/users/",
         "/_authenticated/weapons/"
@@ -754,11 +851,20 @@ export const routeTree = rootRoute
     "/(auth)/500": {
       "filePath": "(auth)/500.tsx"
     },
+    "/(auth)/callback": {
+      "filePath": "(auth)/callback.tsx"
+    },
+    "/(auth)/confirm": {
+      "filePath": "(auth)/confirm.tsx"
+    },
     "/(auth)/otp": {
       "filePath": "(auth)/otp.tsx"
     },
     "/(auth)/sign-in": {
       "filePath": "(auth)/sign-in.tsx"
+    },
+    "/(auth)/sign-out": {
+      "filePath": "(auth)/sign-out.tsx"
     },
     "/_authenticated/settings": {
       "filePath": "_authenticated/settings/route.lazy.tsx",
@@ -825,6 +931,10 @@ export const routeTree = rootRoute
     },
     "/_authenticated/characters/": {
       "filePath": "_authenticated/characters/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/countries/": {
+      "filePath": "_authenticated/countries/index.lazy.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/help-center/": {

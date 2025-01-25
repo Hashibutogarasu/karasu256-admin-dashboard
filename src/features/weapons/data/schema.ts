@@ -11,6 +11,7 @@ export const weaponsSchema = z.object({
   type: z.string(),
   mainStat: z.string(),
   subStat: z.string(),
+  icon_url: z.string().url().optional(),
   version: z.string(),
 })
 

@@ -80,13 +80,13 @@ export function ArtifactsImportDialog({ open, onOpenChange }: Props) {
     >
       <DialogContent className='sm:max-w-sm gap-2'>
         <DialogHeader className='text-left'>
-          <DialogTitle>Import Tasks</DialogTitle>
+          <DialogTitle>Import Artifacts</DialogTitle>
           <DialogDescription>
-            Import tasks quickly from a CSV file.
+            Import artifacts quickly from a CSV file.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form id='task-import-form' onSubmit={form.handleSubmit(onSubmit)}>
+          <form id='artifact-import-form' onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name='file'

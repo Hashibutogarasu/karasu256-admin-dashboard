@@ -4,11 +4,11 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { columns } from './components/columns'
-import { DataTable } from './components/data-table'
 import { ArtifactsDialogs } from './components/artifacts-dialogs'
 import { TasksPrimaryButtons } from './components/artifacts-primary-buttons'
 import ArtifactsProvider from './context/artifacts-context'
 import { artifacts } from './data/artifacts'
+import { DataTable } from '@/components/data-table/data-table'
 
 export default function Artifacts() {
   return (

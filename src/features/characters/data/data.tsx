@@ -1,71 +1,53 @@
-import {
-  IconArrowDown,
-  IconArrowRight,
-  IconArrowUp,
-  IconCircle,
-  IconCircleCheck,
-  IconCircleX,
-  IconExclamationCircle,
-  IconStopwatch,
-} from '@tabler/icons-react'
-
-export const labels = [
+export const elements = [
   {
-    value: 'bug',
-    label: 'Bug',
+    label: 'Pyro',
+    value: 'pyro',
   },
   {
-    value: 'feature',
-    label: 'Feature',
+    label: 'Hydro',
+    value: 'hydro',
   },
   {
-    value: 'documentation',
-    label: 'Documentation',
-  },
-]
-
-export const statuses = [
-  {
-    value: 'backlog',
-    label: 'Backlog',
-    icon: IconExclamationCircle,
+    label: 'Anemo',
+    value: 'anemo',
   },
   {
-    value: 'todo',
-    label: 'Todo',
-    icon: IconCircle,
+    label: 'Electro',
+    value: 'electro',
   },
   {
-    value: 'in progress',
-    label: 'In Progress',
-    icon: IconStopwatch,
+    label: 'Cryo',
+    value: 'cryo',
   },
   {
-    value: 'done',
-    label: 'Done',
-    icon: IconCircleCheck,
+    label: 'Geo',
+    value: 'geo',
   },
   {
-    value: 'canceled',
-    label: 'Canceled',
-    icon: IconCircleX,
+    label: 'Dendro',
+    value: 'dendro',
   },
 ]
 
-export const priorities = [
+export const weapons = [
   {
-    label: 'Low',
-    value: 'low',
-    icon: IconArrowDown,
+    label: 'Sword',
+    value: 'sword',
   },
   {
-    label: 'Medium',
-    value: 'medium',
-    icon: IconArrowRight,
+    label: 'Claymore',
+    value: 'claymore',
   },
   {
-    label: 'High',
-    value: 'high',
-    icon: IconArrowUp,
+    label: 'Polearm',
+    value: 'polearm',
+  },
+  {
+    label: 'Bow',
+    value: 'bow',
+  },
+  {
+    label: 'Catalyst',
+    value: 'catalyst',
   },
 ]

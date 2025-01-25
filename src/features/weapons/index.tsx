@@ -4,11 +4,11 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { columns } from './components/columns'
-import { DataTable } from './components/data-table'
 import { WeaponsDialogs } from './components/weapons-dialogs'
 import { TasksPrimaryButtons } from './components/weapons-primary-buttons'
 import TasksProvider from './context/weapons-context'
 import { artifacts } from './data/weapons'
+import { DataTable } from '@/components/data-table/data-table'
 
 export default function Weapons() {
   return (

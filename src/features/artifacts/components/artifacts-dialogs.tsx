@@ -35,7 +35,7 @@ export function ArtifactsDialogs() {
           />
 
           <ConfirmDialog
-            key='task-delete'
+            key='atifact-delete'
             destructive
             open={open === 'delete'}
             onOpenChange={() => {
@@ -50,7 +50,7 @@ export function ArtifactsDialogs() {
                 setCurrentRow(null)
               }, 500)
               toast({
-                title: 'The following task has been deleted:',
+                title: 'The following atifact has been deleted:',
                 description: (
                   <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
                     <code className='text-white'>
@@ -61,10 +61,10 @@ export function ArtifactsDialogs() {
               })
             }}
             className='max-w-md'
-            title={`Delete this task: ${currentRow.id} ?`}
+            title={`Delete this atifact: ${currentRow.id} ?`}
             desc={
               <>
-                You are about to delete a task with the ID{' '}
+                You are about to delete a atifact with the ID{' '}
                 <strong>{currentRow.id}</strong>. <br />
                 This action cannot be undone.
               </>

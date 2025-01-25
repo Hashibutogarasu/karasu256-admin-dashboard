@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
 import { cn } from '@/lib/utils'
-import { toast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -17,13 +16,15 @@ import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { PinInput, PinInputField } from '@/components/pin-input'
 
-type OtpFormProps = HTMLAttributes<HTMLDivElement>
+type OtpFormProps = HTMLAttributes<HTMLDivElement> & {
+  onEnterCode?: (code: string) => void
+}
 
 const formSchema = z.object({
   otp: z.string().min(1, { message: 'Please enter your otp code.' }),
 })
 
-export function OtpForm({ className, ...props }: OtpFormProps) {
+export function OtpForm({ className, onEnterCode, ...props }: OtpFormProps) {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [disabledBtn, setDisabledBtn] = useState(true)
@@ -35,14 +36,10 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
 
   function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+
+    if (onEnterCode) {
+      onEnterCode(data.otp)
+    }
 
     setTimeout(() => {
       setIsLoading(false)
