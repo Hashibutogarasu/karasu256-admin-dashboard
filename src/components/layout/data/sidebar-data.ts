@@ -10,6 +10,7 @@ import {
   IconSword,
   IconUser,
   IconApps,
+  IconWorld,
 } from '@tabler/icons-react'
 import { type SidebarData } from '../types'
 
@@ -46,6 +47,11 @@ export const sidebarData: SidebarData = {
               title: 'Weapons',
               url: '/wiki/genshin/weapons',
               icon: IconSword,
+            },
+            {
+              title: 'Countries',
+              url: '/wiki/genshin/countries',
+              icon: IconWorld,
             },
           ],
         }
