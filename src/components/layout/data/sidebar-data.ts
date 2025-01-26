@@ -10,7 +10,6 @@ import {
   IconSword,
   IconUser,
   IconApps,
-  IconWorld,
 } from '@tabler/icons-react'
 import { type SidebarData } from '../types'
 
@@ -27,28 +26,29 @@ export const sidebarData: SidebarData = {
       ],
     },
     {
-      'title': 'Genshin Impact Wiki',
+      'title': 'Wiki',
       items: [
         {
-          title: 'Characters',
-          url: '/characters',
+          title: 'Genshin Impact',
           icon: IconUser,
-        },
-        {
-          title: 'Weapons',
-          url: '/weapons',
-          icon: IconSword,
-        },
-        {
-          title: 'Artifacts',
-          url: '/artifacts',
-          icon: IconApps,
-        },
-        {
-          title: 'Countries',
-          url: '/countries',
-          icon: IconWorld,
-        },
+          items: [
+            {
+              title: 'Characters',
+              url: '/wiki/genshin/characters',
+              icon: IconUser,
+            },
+            {
+              title: 'Artifacts',
+              url: '/wiki/genshin/artifacts',
+              icon: IconApps,
+            },
+            {
+              title: 'Weapons',
+              url: '/wiki/genshin/weapons',
+              icon: IconSword,
+            },
+          ],
+        }
       ]
     },
     {
