@@ -1,8 +1,6 @@
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Link } from '@tanstack/react-router'
-import { toast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -14,17 +12,19 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { useUserProfile } from '@/hooks/use-user-profile'
+import { useCognito } from '@/hooks/use-cognito'
+import { AuthenticationDetails, CognitoUser, CognitoUserAttribute } from 'amazon-cognito-identity-js'
+import { useEffect, useState } from 'react'
+import { toast } from '@/hooks/use-toast'
 
 const profileFormSchema = z.object({
-  username: z
+  email: z
+    .string()
+    .min(1, { message: 'Please enter your email' })
+    .email({ message: 'Invalid email address' }),
+  picture: z.string().url({ message: 'Invalid URL' }).optional(),
+  nickname: z
     .string()
     .min(2, {
       message: 'Username must be at least 2 characters.',
@@ -32,35 +32,91 @@ const profileFormSchema = z.object({
     .max(30, {
       message: 'Username must not be longer than 30 characters.',
     }),
-  email: z
-    .string({
-      required_error: 'Please select an email to display.',
-    })
-    .email(),
+  password: z.string()
 })
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
 export default function ProfileForm() {
-  const user = useUserProfile()
+  const userProfile = useUserProfile()
+  const userPool = useCognito()
+
+  const [loading, setLoading] = useState(true)
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      username: user?.nickname,
-      email: user?.email,
+      picture: '',
+      email: '',
+      nickname: '',
     },
     mode: 'onChange',
   })
 
+  useEffect(() => {
+    if (!loading && userProfile) {
+      form.setValue('email', userProfile.email || '')
+      form.setValue('nickname', userProfile.nickname || '')
+      form.setValue('picture', userProfile.picture || '')
+    }
+
+    setLoading(false)
+  }, [form, loading, userProfile])
+
   function onSubmit(data: ProfileFormValues) {
+    setLoading(true)
+
+    const authDetails = new AuthenticationDetails({
+      Username: data.email,
+      Password: data.password
+    })
+    const user = new CognitoUser({
+      Username: data.email,
+      Pool: userPool
+    })
+
     toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+      title: 'Updating profile...',
+      description: 'Please wait while we update your profile.',
+      duration: 2000,
+    })
+    user?.authenticateUser(authDetails, {
+      onSuccess: () => {
+        const attributes = [
+          new CognitoUserAttribute({
+            Name: 'nickname',
+            Value: data.nickname
+          }),
+          new CognitoUserAttribute({
+            Name: 'picture',
+            Value: data.picture || ''
+          }),
+        ]
+
+        user?.updateAttributes(attributes, (err) => {
+          setLoading(false)
+          if (err) {
+            toast({
+              title: 'Error',
+              description: err.message,
+            })
+            return
+          }
+
+          toast({
+            variant: 'default',
+            title: 'Success',
+            description: 'Profile updated successfully.',
+          })
+        })
+      },
+      onFailure: (err) => {
+        toast({
+          title: 'Error',
+          description: err.message,
+        })
+        setLoading(false)
+      }
     })
   }
 
@@ -69,12 +125,12 @@ export default function ProfileForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
         <FormField
           control={form.control}
-          name='username'
+          name='nickname'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Nick name</FormLabel>
               <FormControl>
-                <Input placeholder={'username'} {...field} />
+                <Input type='text' placeholder={'nickname'} {...field} disabled={loading} />
               </FormControl>
               <FormDescription>
                 This is your public display name. It can be your real name or a
@@ -86,29 +142,53 @@ export default function ProfileForm() {
         />
         <FormField
           control={form.control}
-          name='email'
+          name='picture'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder='Select a verified email to display' />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value={user?.email as string}>{user?.email}</SelectItem>
-                </SelectContent>
-              </Select>
+              <FormLabel>Profile picture</FormLabel>
+              <FormControl>
+                <Input type='url' placeholder={'profile picture'} {...field} disabled={loading} />
+              </FormControl>
               <FormDescription>
-                You can manage verified email addresses in your{' '}
-                <Link to='/'>email settings</Link>.
+                A URL to an image that will be used as your profile picture.
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type='submit'>Update profile</Button>
+        <FormField
+          control={form.control}
+          name='email'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input type='email' placeholder={'email'} {...field} disabled={loading} />
+              </FormControl>
+              <FormDescription>
+                Your email address is used to log in and send you notifications.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='password'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input type='password' placeholder={'password'} {...field} disabled={loading} />
+              </FormControl>
+              <FormDescription>
+                Enter your password to confirm changes.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button disabled={loading} type='submit'>Update profile</Button>
       </form>
     </Form>
   )
