@@ -65,8 +65,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     user?.authenticateUser(authDetails, {
       onSuccess: function () {
-        // const accessToken = user.getSignInUserSession()?.getAccessToken().getJwtToken()
-        // console.log(JSON.stringify(accessToken, null, 2))
+        const accessToken = user.getSignInUserSession()?.getAccessToken().getJwtToken()
+        localStorage.setItem('accessToken', accessToken!)
         toast({
           title: 'Success',
           description: <div>
