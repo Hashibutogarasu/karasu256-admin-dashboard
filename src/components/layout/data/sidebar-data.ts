@@ -27,28 +27,34 @@ export const sidebarData: SidebarData = {
       ],
     },
     {
-      'title': 'Genshin Impact Wiki',
+      'title': 'Wiki',
       items: [
         {
-          title: 'Characters',
-          url: '/characters',
+          title: 'Genshin Impact',
           icon: IconUser,
-        },
-        {
-          title: 'Weapons',
-          url: '/weapons',
-          icon: IconSword,
-        },
-        {
-          title: 'Artifacts',
-          url: '/artifacts',
-          icon: IconApps,
-        },
-        {
-          title: 'Countries',
-          url: '/countries',
-          icon: IconWorld,
-        },
+          items: [
+            {
+              title: 'Characters',
+              url: '/wiki/genshin/characters',
+              icon: IconUser,
+            },
+            {
+              title: 'Artifacts',
+              url: '/wiki/genshin/artifacts',
+              icon: IconApps,
+            },
+            {
+              title: 'Weapons',
+              url: '/wiki/genshin/weapons',
+              icon: IconSword,
+            },
+            {
+              title: 'Countries',
+              url: '/wiki/genshin/countries',
+              icon: IconWorld,
+            },
+          ],
+        }
       ]
     },
     {
@@ -83,6 +89,11 @@ export const sidebarData: SidebarData = {
               url: '/settings/display',
               icon: IconBrowserCheck,
             },
+            {
+              title: 'Developer',
+              url: '/settings/developer',
+              icon: IconTool,
+            }
           ],
         },
         {

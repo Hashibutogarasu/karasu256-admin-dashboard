@@ -65,9 +65,13 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     user?.authenticateUser(authDetails, {
       onSuccess: function () {
+        // const accessToken = user.getSignInUserSession()?.getAccessToken().getJwtToken()
+        // console.log(JSON.stringify(accessToken, null, 2))
         toast({
           title: 'Success',
-          description: 'You have successfully logged in.',
+          description: <div>
+            <p>{'You have successfully logged in.'}</p>
+          </div>,
         })
         router.navigate({ to: '/' })
       },
@@ -126,17 +130,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             <Button className='mt-2' disabled={isLoading}>
               Login
             </Button>
-
-            <div className='relative my-2'>
-              <div className='absolute inset-0 flex items-center'>
-                <span className='w-full border-t' />
-              </div>
-              <div className='relative flex justify-center text-xs uppercase'>
-                <span className='bg-background px-2 text-muted-foreground'>
-                  Or continue with
-                </span>
-              </div>
-            </div>
           </div>
         </form>
       </Form>

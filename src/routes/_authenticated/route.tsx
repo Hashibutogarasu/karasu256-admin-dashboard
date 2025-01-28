@@ -29,7 +29,8 @@ function RouteComponent() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     user?.getSession((err: any, session: CognitoUserSession) => {
       if (!err) {
-        verfier.verify(session.getAccessToken().getJwtToken()).then((result) => {
+        const accessToken = session.getAccessToken().getJwtToken()
+        verfier.verify(accessToken).then((result) => {
           if (!result['cognito:groups']?.includes('admin')) {
             toast({
               title: 'Error',
