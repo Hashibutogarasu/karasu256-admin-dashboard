@@ -38,6 +38,9 @@ const authForgotPasswordLazyImport = createFileRoute(
 const AuthenticatedSettingsRouteLazyImport = createFileRoute(
   '/_authenticated/settings',
 )()
+const AuthenticatedWikiIndexLazyImport = createFileRoute(
+  '/_authenticated/wiki/',
+)()
 const AuthenticatedUsersIndexLazyImport = createFileRoute(
   '/_authenticated/users/',
 )()
@@ -64,18 +67,6 @@ const AuthenticatedSettingsAppearanceLazyImport = createFileRoute(
 )()
 const AuthenticatedSettingsAccountLazyImport = createFileRoute(
   '/_authenticated/settings/account',
-)()
-const AuthenticatedWikiGenshinWeaponsIndexLazyImport = createFileRoute(
-  '/_authenticated/wiki/genshin/weapons/',
-)()
-const AuthenticatedWikiGenshinCountriesIndexLazyImport = createFileRoute(
-  '/_authenticated/wiki/genshin/countries/',
-)()
-const AuthenticatedWikiGenshinCharactersIndexLazyImport = createFileRoute(
-  '/_authenticated/wiki/genshin/characters/',
-)()
-const AuthenticatedWikiGenshinArtifactsIndexLazyImport = createFileRoute(
-  '/_authenticated/wiki/genshin/artifacts/',
 )()
 
 // Create/Update Routes
@@ -202,6 +193,16 @@ const auth500Route = auth500Import.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthenticatedWikiIndexLazyRoute = AuthenticatedWikiIndexLazyImport.update(
+  {
+    id: '/wiki/',
+    path: '/wiki/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any,
+).lazy(() =>
+  import('./routes/_authenticated/wiki/index.lazy').then((d) => d.Route),
+)
+
 const AuthenticatedUsersIndexLazyRoute =
   AuthenticatedUsersIndexLazyImport.update({
     id: '/users/',
@@ -303,50 +304,6 @@ const AuthenticatedWikiRouteLaztRoute = AuthenticatedWikiRouteLaztImport.update(
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any,
 )
-
-const AuthenticatedWikiGenshinWeaponsIndexLazyRoute =
-  AuthenticatedWikiGenshinWeaponsIndexLazyImport.update({
-    id: '/wiki/genshin/weapons/',
-    path: '/wiki/genshin/weapons/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any).lazy(() =>
-    import('./routes/_authenticated/wiki/genshin/weapons/index.lazy').then(
-      (d) => d.Route,
-    ),
-  )
-
-const AuthenticatedWikiGenshinCountriesIndexLazyRoute =
-  AuthenticatedWikiGenshinCountriesIndexLazyImport.update({
-    id: '/wiki/genshin/countries/',
-    path: '/wiki/genshin/countries/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any).lazy(() =>
-    import('./routes/_authenticated/wiki/genshin/countries/index.lazy').then(
-      (d) => d.Route,
-    ),
-  )
-
-const AuthenticatedWikiGenshinCharactersIndexLazyRoute =
-  AuthenticatedWikiGenshinCharactersIndexLazyImport.update({
-    id: '/wiki/genshin/characters/',
-    path: '/wiki/genshin/characters/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any).lazy(() =>
-    import('./routes/_authenticated/wiki/genshin/characters/index.lazy').then(
-      (d) => d.Route,
-    ),
-  )
-
-const AuthenticatedWikiGenshinArtifactsIndexLazyRoute =
-  AuthenticatedWikiGenshinArtifactsIndexLazyImport.update({
-    id: '/wiki/genshin/artifacts/',
-    path: '/wiki/genshin/artifacts/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any).lazy(() =>
-    import('./routes/_authenticated/wiki/genshin/artifacts/index.lazy').then(
-      (d) => d.Route,
-    ),
-  )
 
 // Populate the FileRoutesByPath interface
 
@@ -534,39 +491,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUsersIndexLazyImport
       parentRoute: typeof AuthenticatedRouteImport
     }
+    '/_authenticated/wiki/': {
+      id: '/_authenticated/wiki/'
+      path: '/wiki'
+      fullPath: '/wiki'
+      preLoaderRoute: typeof AuthenticatedWikiIndexLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
     '/_authenticated/wiki/route/lazt': {
       id: '/_authenticated/wiki/route/lazt'
       path: '/wiki/route/lazt'
       fullPath: '/wiki/route/lazt'
       preLoaderRoute: typeof AuthenticatedWikiRouteLaztImport
-      parentRoute: typeof AuthenticatedRouteImport
-    }
-    '/_authenticated/wiki/genshin/artifacts/': {
-      id: '/_authenticated/wiki/genshin/artifacts/'
-      path: '/wiki/genshin/artifacts'
-      fullPath: '/wiki/genshin/artifacts'
-      preLoaderRoute: typeof AuthenticatedWikiGenshinArtifactsIndexLazyImport
-      parentRoute: typeof AuthenticatedRouteImport
-    }
-    '/_authenticated/wiki/genshin/characters/': {
-      id: '/_authenticated/wiki/genshin/characters/'
-      path: '/wiki/genshin/characters'
-      fullPath: '/wiki/genshin/characters'
-      preLoaderRoute: typeof AuthenticatedWikiGenshinCharactersIndexLazyImport
-      parentRoute: typeof AuthenticatedRouteImport
-    }
-    '/_authenticated/wiki/genshin/countries/': {
-      id: '/_authenticated/wiki/genshin/countries/'
-      path: '/wiki/genshin/countries'
-      fullPath: '/wiki/genshin/countries'
-      preLoaderRoute: typeof AuthenticatedWikiGenshinCountriesIndexLazyImport
-      parentRoute: typeof AuthenticatedRouteImport
-    }
-    '/_authenticated/wiki/genshin/weapons/': {
-      id: '/_authenticated/wiki/genshin/weapons/'
-      path: '/wiki/genshin/weapons'
-      fullPath: '/wiki/genshin/weapons'
-      preLoaderRoute: typeof AuthenticatedWikiGenshinWeaponsIndexLazyImport
       parentRoute: typeof AuthenticatedRouteImport
     }
   }
@@ -609,11 +545,8 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAppsIndexLazyRoute: typeof AuthenticatedAppsIndexLazyRoute
   AuthenticatedHelpCenterIndexLazyRoute: typeof AuthenticatedHelpCenterIndexLazyRoute
   AuthenticatedUsersIndexLazyRoute: typeof AuthenticatedUsersIndexLazyRoute
+  AuthenticatedWikiIndexLazyRoute: typeof AuthenticatedWikiIndexLazyRoute
   AuthenticatedWikiRouteLaztRoute: typeof AuthenticatedWikiRouteLaztRoute
-  AuthenticatedWikiGenshinArtifactsIndexLazyRoute: typeof AuthenticatedWikiGenshinArtifactsIndexLazyRoute
-  AuthenticatedWikiGenshinCharactersIndexLazyRoute: typeof AuthenticatedWikiGenshinCharactersIndexLazyRoute
-  AuthenticatedWikiGenshinCountriesIndexLazyRoute: typeof AuthenticatedWikiGenshinCountriesIndexLazyRoute
-  AuthenticatedWikiGenshinWeaponsIndexLazyRoute: typeof AuthenticatedWikiGenshinWeaponsIndexLazyRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -623,15 +556,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAppsIndexLazyRoute: AuthenticatedAppsIndexLazyRoute,
   AuthenticatedHelpCenterIndexLazyRoute: AuthenticatedHelpCenterIndexLazyRoute,
   AuthenticatedUsersIndexLazyRoute: AuthenticatedUsersIndexLazyRoute,
+  AuthenticatedWikiIndexLazyRoute: AuthenticatedWikiIndexLazyRoute,
   AuthenticatedWikiRouteLaztRoute: AuthenticatedWikiRouteLaztRoute,
-  AuthenticatedWikiGenshinArtifactsIndexLazyRoute:
-    AuthenticatedWikiGenshinArtifactsIndexLazyRoute,
-  AuthenticatedWikiGenshinCharactersIndexLazyRoute:
-    AuthenticatedWikiGenshinCharactersIndexLazyRoute,
-  AuthenticatedWikiGenshinCountriesIndexLazyRoute:
-    AuthenticatedWikiGenshinCountriesIndexLazyRoute,
-  AuthenticatedWikiGenshinWeaponsIndexLazyRoute:
-    AuthenticatedWikiGenshinWeaponsIndexLazyRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -663,11 +589,8 @@ export interface FileRoutesByFullPath {
   '/help-center': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/settings/': typeof AuthenticatedSettingsIndexLazyRoute
   '/users': typeof AuthenticatedUsersIndexLazyRoute
+  '/wiki': typeof AuthenticatedWikiIndexLazyRoute
   '/wiki/route/lazt': typeof AuthenticatedWikiRouteLaztRoute
-  '/wiki/genshin/artifacts': typeof AuthenticatedWikiGenshinArtifactsIndexLazyRoute
-  '/wiki/genshin/characters': typeof AuthenticatedWikiGenshinCharactersIndexLazyRoute
-  '/wiki/genshin/countries': typeof AuthenticatedWikiGenshinCountriesIndexLazyRoute
-  '/wiki/genshin/weapons': typeof AuthenticatedWikiGenshinWeaponsIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -694,11 +617,8 @@ export interface FileRoutesByTo {
   '/help-center': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/settings': typeof AuthenticatedSettingsIndexLazyRoute
   '/users': typeof AuthenticatedUsersIndexLazyRoute
+  '/wiki': typeof AuthenticatedWikiIndexLazyRoute
   '/wiki/route/lazt': typeof AuthenticatedWikiRouteLaztRoute
-  '/wiki/genshin/artifacts': typeof AuthenticatedWikiGenshinArtifactsIndexLazyRoute
-  '/wiki/genshin/characters': typeof AuthenticatedWikiGenshinCharactersIndexLazyRoute
-  '/wiki/genshin/countries': typeof AuthenticatedWikiGenshinCountriesIndexLazyRoute
-  '/wiki/genshin/weapons': typeof AuthenticatedWikiGenshinWeaponsIndexLazyRoute
 }
 
 export interface FileRoutesById {
@@ -729,11 +649,8 @@ export interface FileRoutesById {
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexLazyRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexLazyRoute
+  '/_authenticated/wiki/': typeof AuthenticatedWikiIndexLazyRoute
   '/_authenticated/wiki/route/lazt': typeof AuthenticatedWikiRouteLaztRoute
-  '/_authenticated/wiki/genshin/artifacts/': typeof AuthenticatedWikiGenshinArtifactsIndexLazyRoute
-  '/_authenticated/wiki/genshin/characters/': typeof AuthenticatedWikiGenshinCharactersIndexLazyRoute
-  '/_authenticated/wiki/genshin/countries/': typeof AuthenticatedWikiGenshinCountriesIndexLazyRoute
-  '/_authenticated/wiki/genshin/weapons/': typeof AuthenticatedWikiGenshinWeaponsIndexLazyRoute
 }
 
 export interface FileRouteTypes {
@@ -764,11 +681,8 @@ export interface FileRouteTypes {
     | '/help-center'
     | '/settings/'
     | '/users'
+    | '/wiki'
     | '/wiki/route/lazt'
-    | '/wiki/genshin/artifacts'
-    | '/wiki/genshin/characters'
-    | '/wiki/genshin/countries'
-    | '/wiki/genshin/weapons'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/500'
@@ -794,11 +708,8 @@ export interface FileRouteTypes {
     | '/help-center'
     | '/settings'
     | '/users'
+    | '/wiki'
     | '/wiki/route/lazt'
-    | '/wiki/genshin/artifacts'
-    | '/wiki/genshin/characters'
-    | '/wiki/genshin/countries'
-    | '/wiki/genshin/weapons'
   id:
     | '__root__'
     | '/_authenticated'
@@ -827,11 +738,8 @@ export interface FileRouteTypes {
     | '/_authenticated/help-center/'
     | '/_authenticated/settings/'
     | '/_authenticated/users/'
+    | '/_authenticated/wiki/'
     | '/_authenticated/wiki/route/lazt'
-    | '/_authenticated/wiki/genshin/artifacts/'
-    | '/_authenticated/wiki/genshin/characters/'
-    | '/_authenticated/wiki/genshin/countries/'
-    | '/_authenticated/wiki/genshin/weapons/'
   fileRoutesById: FileRoutesById
 }
 
@@ -906,11 +814,8 @@ export const routeTree = rootRoute
         "/_authenticated/apps/",
         "/_authenticated/help-center/",
         "/_authenticated/users/",
-        "/_authenticated/wiki/route/lazt",
-        "/_authenticated/wiki/genshin/artifacts/",
-        "/_authenticated/wiki/genshin/characters/",
-        "/_authenticated/wiki/genshin/countries/",
-        "/_authenticated/wiki/genshin/weapons/"
+        "/_authenticated/wiki/",
+        "/_authenticated/wiki/route/lazt"
       ]
     },
     "/(auth)/500": {
@@ -1007,24 +912,12 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/users/index.lazy.tsx",
       "parent": "/_authenticated"
     },
+    "/_authenticated/wiki/": {
+      "filePath": "_authenticated/wiki/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
     "/_authenticated/wiki/route/lazt": {
       "filePath": "_authenticated/wiki/route.lazt.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/wiki/genshin/artifacts/": {
-      "filePath": "_authenticated/wiki/genshin/artifacts/index.lazy.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/wiki/genshin/characters/": {
-      "filePath": "_authenticated/wiki/genshin/characters/index.lazy.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/wiki/genshin/countries/": {
-      "filePath": "_authenticated/wiki/genshin/countries/index.lazy.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/wiki/genshin/weapons/": {
-      "filePath": "_authenticated/wiki/genshin/weapons/index.lazy.tsx",
       "parent": "/_authenticated"
     }
   }

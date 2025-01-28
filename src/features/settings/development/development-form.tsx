@@ -83,7 +83,7 @@ export default function DeveloperSettingsForm() {
                 This is the access token for the current user.
               </FormDescription>
               <FormMessage />
-              <Button type='button' style={{ backgroundColor: copySuccess ? 'lightgreen' : 'white' }}
+              <Button type='button' style={{ backgroundColor: copySuccess ? 'lightgreen' : 'white', color: 'black' }}
                 onClick={onCopyClick}>{copySuccess ? 'Copied!' : 'Copy'}</Button>
             </FormItem>
           )}
