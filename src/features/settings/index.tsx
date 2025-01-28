@@ -75,4 +75,9 @@ const sidebarNavItems = [
     icon: <IconBrowserCheck size={18} />,
     href: '/settings/display',
   },
+  {
+    title: 'Developer',
+    icon: <IconTool size={18} />,
+    href: '/settings/developer',
+  }
 ]

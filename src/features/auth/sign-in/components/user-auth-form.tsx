@@ -65,9 +65,13 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     user?.authenticateUser(authDetails, {
       onSuccess: function () {
+        // const accessToken = user.getSignInUserSession()?.getAccessToken().getJwtToken()
+        // console.log(JSON.stringify(accessToken, null, 2))
         toast({
           title: 'Success',
-          description: 'You have successfully logged in.',
+          description: <div>
+            <p>{'You have successfully logged in.'}</p>
+          </div>,
         })
         router.navigate({ to: '/' })
       },

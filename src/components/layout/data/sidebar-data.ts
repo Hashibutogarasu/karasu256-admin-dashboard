@@ -89,6 +89,11 @@ export const sidebarData: SidebarData = {
               url: '/settings/display',
               icon: IconBrowserCheck,
             },
+            {
+              title: 'Developer',
+              url: '/settings/developer',
+              icon: IconTool,
+            }
           ],
         },
         {
