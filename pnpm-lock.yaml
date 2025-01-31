@@ -18,8 +18,8 @@ importers:
         specifier: ^3.9.1
         version: 3.9.1(react-hook-form@7.54.0(react@19.0.0))
       '@karasu-lab/karasu256-api-client':
-        specifier: ^0.5.3
-        version: 0.5.3
+        specifier: ^0.6.0
+        version: 0.6.0
       '@radix-ui/react-alert-dialog':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.0.1)(@types/react@19.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1114,8 +1114,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@karasu-lab/karasu256-api-client@0.5.3':
-    resolution: {integrity: sha512-OFyWCVqby0KmNULkFWoIJxOWPCatqCF8Y7/+MCZ9oCEA+AdW0lObRUAPWJy769JQLhmQ8Z/DPkQ6KUaA4kvoRQ==}
+  '@karasu-lab/karasu256-api-client@0.6.0':
+    resolution: {integrity: sha512-U3oR1pzCE8uoDlph7p8e3iEc4U256vdpHXA5fp8HYD3a4PTU0ChLverpM63i471W0vgYi1m2d/pf143MQOCjzQ==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -6113,7 +6113,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@karasu-lab/karasu256-api-client@0.5.3': {}
+  '@karasu-lab/karasu256-api-client@0.6.0': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:

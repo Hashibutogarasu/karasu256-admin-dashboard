@@ -2,72 +2,70 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useGalleries } from "@/hooks/use-galleries";
 import { useKarasu256API } from "@/hooks/use-karasu256-api";
-import { useR2Storage } from "@/hooks/use-r2-storage";
+import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type Gallery } from "@karasu-lab/karasu256-api-client";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-  PutObjectCommand,
-} from "@aws-sdk/client-s3";
 
 const gallerySchema = z.object({
-  id: z.number().optional(),
-  name: z.string().optional(),
-  alt: z.string(),
-  file: z.any().optional(),
-  createdAt: z.string().optional(),
-  updatedAt: z.string().optional(),
+  file: z.instanceof(File)
+    .refine(
+      file => ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type),
+      'File must be an image',
+    ),
   character: z.any().optional(),
 });
 
 export default function Gallery() {
   const api = useKarasu256API();
-  const bucket = useR2Storage();
-  const gallery = useGalleries();
-  const [galleries, setGalleries] = useState<Gallery[]>();
+  const [galleries, setGalleries] = useState<Gallery[]>([]);
   const [loading, setLoading] = useState(true);
 
   const form = useForm<z.infer<typeof gallerySchema>>({
     resolver: zodResolver(gallerySchema),
-    defaultValues: {
-      name: "",
-      alt: ""
-    }
   })
 
   useEffect(() => {
-    if (!galleries) {
-      setGalleries(gallery);
+    if (loading) {
+      api.galleries.galleriesControllerGet({ query: {} }).then((response) => {
+        setGalleries(response);
+
+        setLoading(false);
+      })
     }
-  }, [galleries, gallery])
+    setLoading(false);
+  }, [api.galleries, galleries, loading])
 
   function onSubmit(data: z.infer<typeof gallerySchema>) {
-    setLoading(true);
-    const file = data.file;
-    const alt = data.alt;
-    const key = `gallery/${data.name}`;
-
-    bucket.send(new PutObjectCommand({
-      Bucket: import.meta.env.VITE_CLOUDFLARE_BUCKET,
-      Key: key,
-      Body: file
-    })).then(() => {
-      api.galleries.galleriesControllerCreate({
-        requestBody: {
-          alt: alt,
-          url: `${import.meta.env.VITE_CLOUDFLARE_PUBLIC_URL}/${key}`
-        }
-      }).then((res) => {
-        if (galleries) {
-          setGalleries([...galleries, res]);
-          setLoading(false);
-        }
-      })
+    toast({
+      title: 'Uploading file...',
+      variant: 'default',
     })
+    setLoading(true);
+
+    api.galleries.galleriesControllerUploadFile({
+      formData: {
+        file: data.file,
+      },
+    }).then((res) => {
+      setGalleries([...galleries, res]);
+
+      toast({
+        title: 'File uploaded successfully',
+        variant: 'default',
+      });
+    }).catch((error) => {
+      toast({
+        title: `Error: ${error.message}`,
+        variant: 'destructive',
+      });
+    });
+
+
+    setLoading(false);
   }
 
   return (
@@ -75,44 +73,42 @@ export default function Gallery() {
       <Form {...form}>
         <div className="mt-4">
           <FormField control={form.control}
-            name="name"
-            render={({ field }) => (
-              <div>
-                <Label form="name">Name</Label>
-                <Input {...field} />
-              </div>
-            )}>
-          </FormField>
-          <FormField control={form.control}
-            name="alt"
-            render={({ field }) => (
-              <div>
-                <Label form="alt">Alt</Label>
-                <Input {...field} />
-              </div>
-            )}
-          >
-          </FormField>
-        </div>
-        <div className="mt-4">
-          <FormField control={form.control}
             name="file"
             render={({ field }) => (
               <div>
                 <Label form="url">File</Label>
-                <Input type="file" {...field} />
+                <Input type="file" onChange={(e) => field.onChange(e.target.files?.[0])} />
+              </div>
+            )}>
+          </FormField>
+        </div>
+        <div className="mt-4">
+          <FormField control={form.control}
+            name="character"
+            render={({ field }) => (
+              <div>
+                <Label form="character">Character</Label>
+                <Input {...field} />
               </div>
             )}>
           </FormField>
         </div>
         <div className="mt-4">
           <Button
-            onClick={form.handleSubmit(onSubmit)}
-            disabled={loading}>
+            onClick={form.handleSubmit(onSubmit)}>
             Submit
           </Button>
         </div>
       </Form>
+      <div className="mt-10 grid grid-cols-7">
+        {
+          galleries.map((gallery) => (
+            <div key={gallery.id}>
+              <img src={`https://cdn.karasu256.com/${gallery.key}`} alt={gallery.alt} width={100} />
+            </div>
+          ))
+        }
+      </div>
     </div>
   )
 }
