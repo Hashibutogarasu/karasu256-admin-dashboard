@@ -7,12 +7,27 @@ import {
 import { NavGroup } from '@/components/layout/nav-group'
 import { NavUser } from '@/components/layout/nav-user'
 import { sidebarData } from './data/sidebar-data'
-import { useUserProfile } from '@/hooks/use-user-profile';
+import { useEffect, useState } from 'react';
+import { UserData } from './types';
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const user = useUserProfile()
+type AppSidebarProps = {
+  user: UserData;
+  children?: React.ReactNode;
+  props?: React.ComponentProps<typeof Sidebar>;
+}
 
-  return (
+export function AppSidebar({ user, ...props }: AppSidebarProps) {
+  const [currentUser, setCurrentUser] = useState<UserData>()
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (loading) {
+      setCurrentUser(user)
+      setLoading(false)
+    }
+  }, [user, loading])
+
+  return loading ? null : (
     <Sidebar collapsible='icon' variant='floating' {...props}>
       <SidebarContent>
         {sidebarData.navGroups.map((props) => (
@@ -21,11 +36,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarFooter>
         {
-          user && (
+          currentUser && (
             <NavUser user={{
-              name: user?.nickname ?? '',
-              email: user?.email ?? '',
-              avatar: user?.picture ?? '',
+              name: currentUser?.nickname ?? '',
+              email: currentUser?.email ?? '',
+              avatar: currentUser?.picture ?? '',
             }} />
           )
         }

@@ -46,7 +46,8 @@ export function ForgotForm({ className, ...props }: ForgotFormProps) {
 
     const user = new CognitoUser({
       Username: data.email,
-      Pool: userPool,
+      Pool: userPool!,
+      Storage: sessionStorage,
     })
 
     setUser(user)

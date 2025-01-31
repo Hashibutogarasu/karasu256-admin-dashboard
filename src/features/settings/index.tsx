@@ -13,8 +13,11 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import SidebarNav from './components/sidebar-nav'
+import { useUserProfile } from '@/context/user-profile-context'
 
 export default function Settings() {
+  const user = useUserProfile()
+
   return (
     <>
       {/* ===== Top Heading ===== */}
@@ -22,7 +25,7 @@ export default function Settings() {
         <Search />
         <div className='ml-auto flex items-center space-x-4'>
           <ThemeSwitch />
-          <ProfileDropdown />
+          <ProfileDropdown userProfile={user} />
         </div>
       </Header>
 

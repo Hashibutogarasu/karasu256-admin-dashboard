@@ -15,8 +15,9 @@ import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { Overview } from './components/overview'
 import { RecentSales } from './components/recent-sales'
+import { UserData } from '@/components/layout/types'
 
-export default function Dashboard() {
+export default function Dashboard({ userProfile }: { userProfile: UserData }) {
   return (
     <>
       {/* ===== Top Heading ===== */}
@@ -25,7 +26,7 @@ export default function Dashboard() {
         <div className='ml-auto flex items-center space-x-4'>
           <Search />
           <ThemeSwitch />
-          <ProfileDropdown />
+          <ProfileDropdown userProfile={userProfile} />
         </div>
       </Header>
 

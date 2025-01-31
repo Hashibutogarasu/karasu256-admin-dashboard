@@ -1,6 +1,6 @@
 import { UserAuthForm } from './components/user-auth-form'
 import AuthLayout from '../auth-layout'
-import { Card } from '@aws-amplify/ui-react'
+import { Card } from '@/components/ui/card'
 
 export default function SignOut() {
   return (

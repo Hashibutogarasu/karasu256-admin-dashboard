@@ -15,8 +15,8 @@ import { Input } from '@/components/ui/input'
 import { useCognito } from '@/hooks/use-cognito'
 import { useState } from 'react'
 import { AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js'
-import { useUserProfile } from '@/hooks/use-user-profile'
 import { Textarea } from '@/components/ui/textarea'
+import { useUserProfile } from '@/context/user-profile-context'
 
 const developerSettingsFormSchema = z.object({
   password: z.string().min(8),
@@ -28,6 +28,7 @@ type DeveloperSettingsFormValues = z.infer<typeof developerSettingsFormSchema>
 export default function DeveloperSettingsForm() {
   const userPool = useCognito()
   const profile = useUserProfile()
+
   const [access_token, setAccessToken] = useState<string>()
   const [copySuccess, setCopySuccess] = useState(false)
 
@@ -47,7 +48,7 @@ export default function DeveloperSettingsForm() {
       })
       const user = new CognitoUser({
         Username: profile?.email,
-        Pool: userPool
+        Pool: userPool!
       })
       user.authenticateUser(authDetails, {
         onSuccess: (result) => {

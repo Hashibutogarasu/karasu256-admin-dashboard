@@ -50,8 +50,8 @@ const AuthenticatedSettingsIndexLazyImport = createFileRoute(
 const AuthenticatedHelpCenterIndexLazyImport = createFileRoute(
   '/_authenticated/help-center/',
 )()
-const AuthenticatedAppsIndexLazyImport = createFileRoute(
-  '/_authenticated/apps/',
+const AuthenticatedWikiGalleryLazyImport = createFileRoute(
+  '/_authenticated/wiki/gallery',
 )()
 const AuthenticatedSettingsNotificationsLazyImport = createFileRoute(
   '/_authenticated/settings/notifications',
@@ -232,15 +232,14 @@ const AuthenticatedHelpCenterIndexLazyRoute =
     ),
   )
 
-const AuthenticatedAppsIndexLazyRoute = AuthenticatedAppsIndexLazyImport.update(
-  {
-    id: '/apps/',
-    path: '/apps/',
+const AuthenticatedWikiGalleryLazyRoute =
+  AuthenticatedWikiGalleryLazyImport.update({
+    id: '/wiki/gallery',
+    path: '/wiki/gallery',
     getParentRoute: () => AuthenticatedRouteRoute,
-  } as any,
-).lazy(() =>
-  import('./routes/_authenticated/apps/index.lazy').then((d) => d.Route),
-)
+  } as any).lazy(() =>
+    import('./routes/_authenticated/wiki/gallery.lazy').then((d) => d.Route),
+  )
 
 const AuthenticatedSettingsNotificationsLazyRoute =
   AuthenticatedSettingsNotificationsLazyImport.update({
@@ -463,11 +462,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsNotificationsLazyImport
       parentRoute: typeof AuthenticatedSettingsRouteLazyImport
     }
-    '/_authenticated/apps/': {
-      id: '/_authenticated/apps/'
-      path: '/apps'
-      fullPath: '/apps'
-      preLoaderRoute: typeof AuthenticatedAppsIndexLazyImport
+    '/_authenticated/wiki/gallery': {
+      id: '/_authenticated/wiki/gallery'
+      path: '/wiki/gallery'
+      fullPath: '/wiki/gallery'
+      preLoaderRoute: typeof AuthenticatedWikiGalleryLazyImport
       parentRoute: typeof AuthenticatedRouteImport
     }
     '/_authenticated/help-center/': {
@@ -542,7 +541,7 @@ const AuthenticatedSettingsRouteLazyRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRouteLazyRoute: typeof AuthenticatedSettingsRouteLazyRouteWithChildren
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
-  AuthenticatedAppsIndexLazyRoute: typeof AuthenticatedAppsIndexLazyRoute
+  AuthenticatedWikiGalleryLazyRoute: typeof AuthenticatedWikiGalleryLazyRoute
   AuthenticatedHelpCenterIndexLazyRoute: typeof AuthenticatedHelpCenterIndexLazyRoute
   AuthenticatedUsersIndexLazyRoute: typeof AuthenticatedUsersIndexLazyRoute
   AuthenticatedWikiIndexLazyRoute: typeof AuthenticatedWikiIndexLazyRoute
@@ -553,7 +552,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSettingsRouteLazyRoute:
     AuthenticatedSettingsRouteLazyRouteWithChildren,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
-  AuthenticatedAppsIndexLazyRoute: AuthenticatedAppsIndexLazyRoute,
+  AuthenticatedWikiGalleryLazyRoute: AuthenticatedWikiGalleryLazyRoute,
   AuthenticatedHelpCenterIndexLazyRoute: AuthenticatedHelpCenterIndexLazyRoute,
   AuthenticatedUsersIndexLazyRoute: AuthenticatedUsersIndexLazyRoute,
   AuthenticatedWikiIndexLazyRoute: AuthenticatedWikiIndexLazyRoute,
@@ -585,7 +584,7 @@ export interface FileRoutesByFullPath {
   '/settings/developer': typeof AuthenticatedSettingsDeveloperLazyRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayLazyRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsLazyRoute
-  '/apps': typeof AuthenticatedAppsIndexLazyRoute
+  '/wiki/gallery': typeof AuthenticatedWikiGalleryLazyRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/settings/': typeof AuthenticatedSettingsIndexLazyRoute
   '/users': typeof AuthenticatedUsersIndexLazyRoute
@@ -613,7 +612,7 @@ export interface FileRoutesByTo {
   '/settings/developer': typeof AuthenticatedSettingsDeveloperLazyRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayLazyRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsLazyRoute
-  '/apps': typeof AuthenticatedAppsIndexLazyRoute
+  '/wiki/gallery': typeof AuthenticatedWikiGalleryLazyRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/settings': typeof AuthenticatedSettingsIndexLazyRoute
   '/users': typeof AuthenticatedUsersIndexLazyRoute
@@ -645,7 +644,7 @@ export interface FileRoutesById {
   '/_authenticated/settings/developer': typeof AuthenticatedSettingsDeveloperLazyRoute
   '/_authenticated/settings/display': typeof AuthenticatedSettingsDisplayLazyRoute
   '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsLazyRoute
-  '/_authenticated/apps/': typeof AuthenticatedAppsIndexLazyRoute
+  '/_authenticated/wiki/gallery': typeof AuthenticatedWikiGalleryLazyRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexLazyRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexLazyRoute
@@ -677,7 +676,7 @@ export interface FileRouteTypes {
     | '/settings/developer'
     | '/settings/display'
     | '/settings/notifications'
-    | '/apps'
+    | '/wiki/gallery'
     | '/help-center'
     | '/settings/'
     | '/users'
@@ -704,7 +703,7 @@ export interface FileRouteTypes {
     | '/settings/developer'
     | '/settings/display'
     | '/settings/notifications'
-    | '/apps'
+    | '/wiki/gallery'
     | '/help-center'
     | '/settings'
     | '/users'
@@ -734,7 +733,7 @@ export interface FileRouteTypes {
     | '/_authenticated/settings/developer'
     | '/_authenticated/settings/display'
     | '/_authenticated/settings/notifications'
-    | '/_authenticated/apps/'
+    | '/_authenticated/wiki/gallery'
     | '/_authenticated/help-center/'
     | '/_authenticated/settings/'
     | '/_authenticated/users/'
@@ -811,7 +810,7 @@ export const routeTree = rootRoute
       "children": [
         "/_authenticated/settings",
         "/_authenticated/",
-        "/_authenticated/apps/",
+        "/_authenticated/wiki/gallery",
         "/_authenticated/help-center/",
         "/_authenticated/users/",
         "/_authenticated/wiki/",
@@ -896,8 +895,8 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/settings/notifications.lazy.tsx",
       "parent": "/_authenticated/settings"
     },
-    "/_authenticated/apps/": {
-      "filePath": "_authenticated/apps/index.lazy.tsx",
+    "/_authenticated/wiki/gallery": {
+      "filePath": "_authenticated/wiki/gallery.lazy.tsx",
       "parent": "/_authenticated"
     },
     "/_authenticated/help-center/": {
