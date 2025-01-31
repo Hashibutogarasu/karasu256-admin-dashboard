@@ -60,7 +60,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     })
     const user = new CognitoUser({
       Username: data.email,
-      Pool: userPool
+      Pool: userPool!,
+      Storage: sessionStorage
     })
 
     user?.authenticateUser(authDetails, {

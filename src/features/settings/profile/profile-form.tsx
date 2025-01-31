@@ -12,11 +12,11 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useUserProfile } from '@/hooks/use-user-profile'
 import { useCognito } from '@/hooks/use-cognito'
 import { AuthenticationDetails, CognitoUser, CognitoUserAttribute } from 'amazon-cognito-identity-js'
 import { useState } from 'react'
 import { toast } from '@/hooks/use-toast'
+import { useUserProfile } from '@/context/user-profile-context'
 
 const profileFormSchema = z.object({
   email: z
@@ -62,7 +62,7 @@ export default function ProfileForm() {
     })
     const user = new CognitoUser({
       Username: data.email,
-      Pool: userPool
+      Pool: userPool!
     })
 
     toast({

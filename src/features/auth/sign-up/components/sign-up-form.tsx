@@ -62,7 +62,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
   function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
 
-    userPool.signUp(data.email, data.password, [
+    userPool?.signUp(data.email, data.password, [
       new CognitoUserAttribute({
         Name: 'nickname',
         Value: data.nickname

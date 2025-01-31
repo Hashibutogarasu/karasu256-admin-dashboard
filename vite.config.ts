@@ -17,5 +17,14 @@ export default defineConfig({
   },
   define: {
     global: 'window',
+  },
+  server: {
+
+    cors: {
+      //https://karasu-lab-storage.dc4a5b8ffc2d999e39e9f9509bb4f9af.r2.cloudflarestorage.com/karasu-lab-storage/
+      origin: 'https://karasu-lab-storage.dc4a5b8ffc2d999e39e9f9509bb4f9af.r2.cloudflarestorage.com',
+      allowedHeaders: 'Authorization, Content-Type, Access-Control-Allow-Origin',
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    }
   }
 })

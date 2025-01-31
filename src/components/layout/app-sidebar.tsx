@@ -7,12 +7,24 @@ import {
 import { NavGroup } from '@/components/layout/nav-group'
 import { NavUser } from '@/components/layout/nav-user'
 import { sidebarData } from './data/sidebar-data'
-import { useUserProfile } from '@/hooks/use-user-profile';
+import { FetchUserAttributesOutput } from 'aws-amplify/auth';
+import { useEffect, useState } from 'react';
+import { useUserProfile } from '@/context/user-profile-context';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useUserProfile()
 
-  return (
+  const [currentUser, setCurrentUser] = useState<FetchUserAttributesOutput>()
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (loading) {
+      setCurrentUser(user)
+      setLoading(false)
+    }
+  }, [user, loading])
+
+  return loading ? null : (
     <Sidebar collapsible='icon' variant='floating' {...props}>
       <SidebarContent>
         {sidebarData.navGroups.map((props) => (
@@ -21,11 +33,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarFooter>
         {
-          user && (
+          currentUser && (
             <NavUser user={{
-              name: user?.nickname ?? '',
-              email: user?.email ?? '',
-              avatar: user?.picture ?? '',
+              name: currentUser?.nickname ?? '',
+              email: currentUser?.email ?? '',
+              avatar: currentUser?.picture ?? '',
             }} />
           )
         }

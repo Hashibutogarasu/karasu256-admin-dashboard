@@ -45,7 +45,7 @@ export function ConfirmForm({ className, ...props }: OtpFormProps) {
 
     const user = new CognitoUser({
       Username: data.email,
-      Pool: userPool
+      Pool: userPool!
     })
 
     user.confirmRegistration(data.code, true, function (err) {
