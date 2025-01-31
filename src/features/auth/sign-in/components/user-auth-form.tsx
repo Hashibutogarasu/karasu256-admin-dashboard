@@ -64,10 +64,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       Storage: sessionStorage
     })
 
+    sessionStorage.setItem('username', data.email)
+    sessionStorage.setItem('email', data.email)
+    sessionStorage.setItem('password', data.password)
+
     user?.authenticateUser(authDetails, {
       onSuccess: function () {
-        const accessToken = user.getSignInUserSession()?.getAccessToken().getJwtToken()
-        localStorage.setItem('accessToken', accessToken!)
         toast({
           title: 'Success',
           description: <div>

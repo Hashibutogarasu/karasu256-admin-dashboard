@@ -7,14 +7,17 @@ import {
 import { NavGroup } from '@/components/layout/nav-group'
 import { NavUser } from '@/components/layout/nav-user'
 import { sidebarData } from './data/sidebar-data'
-import { FetchUserAttributesOutput } from 'aws-amplify/auth';
 import { useEffect, useState } from 'react';
-import { useUserProfile } from '@/context/user-profile-context';
+import { UserData } from './types';
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const user = useUserProfile()
+type AppSidebarProps = {
+  user: UserData;
+  children?: React.ReactNode;
+  props?: React.ComponentProps<typeof Sidebar>;
+}
 
-  const [currentUser, setCurrentUser] = useState<FetchUserAttributesOutput>()
+export function AppSidebar({ user, ...props }: AppSidebarProps) {
+  const [currentUser, setCurrentUser] = useState<UserData>()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

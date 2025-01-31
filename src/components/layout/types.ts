@@ -27,4 +27,12 @@ interface SidebarData {
   navGroups: NavGroup[]
 }
 
-export type { SidebarData, NavGroup, NavItem, NavCollapsible, NavLink }
+interface UserData {
+  email: string
+  email_verified: boolean
+  nickname?: string
+  picture?: string
+  sub: string
+}
+
+export type { SidebarData, NavGroup, NavItem, NavCollapsible, NavLink, UserData }

@@ -10,8 +10,11 @@ import { UsersTable } from './components/users-table'
 import UsersProvider from './context/users-context'
 import { userListSchema } from './data/schema'
 import { users } from './data/users'
+import { useUserProfile } from '@/context/user-profile-context'
 
 export default function Users() {
+  const user = useUserProfile()
+
   // Parse user list
   const userList = userListSchema.parse(users)
 
@@ -21,7 +24,7 @@ export default function Users() {
         <Search />
         <div className='ml-auto flex items-center space-x-4'>
           <ThemeSwitch />
-          <ProfileDropdown />
+          <ProfileDropdown user={user} />
         </div>
       </Header>
 

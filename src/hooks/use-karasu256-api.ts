@@ -11,7 +11,7 @@ export function useKarasu256API() {
   }
   else {
     api.characters.httpRequest.config.HEADERS = {
-      Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`
     }
   }
 

@@ -1,12 +1,11 @@
-import UnauthorisedError from "@/features/errors/unauthorized-error";
-import { FetchUserAttributesOutput } from "aws-amplify/auth";
+import { UserData } from "@/components/layout/types";
 import { createContext, useContext } from "react";
 
-const UserProfileContext = createContext<FetchUserAttributesOutput | null>(null);
+const UserProfileContext = createContext<UserData | null>(null);
 
-export function UserProfileProvider({ children, user }: { children: React.ReactNode; user?: FetchUserAttributesOutput | null }) {
+export function UserProfileProvider({ children, user }: { children: React.ReactNode; user: UserData }) {
   return (
-    user ? <UserProfileContext.Provider value={user}>{children}</UserProfileContext.Provider> : <UnauthorisedError />
+    <UserProfileContext.Provider value={user}>{children}</UserProfileContext.Provider>
   );
 }
 
