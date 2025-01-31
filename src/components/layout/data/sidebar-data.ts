@@ -8,6 +8,7 @@ import {
   IconTool,
   IconUserCog,
   IconUser,
+  IconImageInPicture,
 } from '@tabler/icons-react'
 import { type SidebarData } from '../types'
 
@@ -30,6 +31,11 @@ export const sidebarData: SidebarData = {
           title: 'Wiki data',
           icon: IconUser,
           url: '/wiki',
+        },
+        {
+          title: 'Gallery',
+          icon: IconImageInPicture,
+          url: '/wiki/gallery',
         }
       ]
     },
