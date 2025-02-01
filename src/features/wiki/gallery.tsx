@@ -4,6 +4,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAPIWithCredentials, useKarasu256API } from "@/hooks/use-karasu256-api";
 import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -150,18 +151,20 @@ export default function Gallery() {
                       {field.value ? field.value.name : 'Select a character'}
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem onSelect={() => field.onChange(undefined)}>
-                      None
-                    </DropdownMenuItem>
-                    {
-                      characters?.map((character) => (
-                        <DropdownMenuItem key={character.id} onSelect={() => field.onChange(character)}>
-                          {character.name}
-                        </DropdownMenuItem>
-                      ))
-                    }
-                  </DropdownMenuContent>
+                  <ScrollArea>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem onSelect={() => field.onChange(undefined)}>
+                        None
+                      </DropdownMenuItem>
+                      {
+                        characters?.map((character) => (
+                          <DropdownMenuItem key={character.id} onSelect={() => field.onChange(character)}>
+                            {character.name}
+                          </DropdownMenuItem>
+                        ))
+                      }
+                    </DropdownMenuContent>
+                  </ScrollArea>
                 </DropdownMenu>
               </div>
             )}>
