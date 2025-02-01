@@ -10,10 +10,6 @@
     {
       "source": "/(.*)",
       "destination": "/"
-    },
-    {
-      "source": "/api-json",
-      "destination": "https://api.karasu256.com/api-json"
     }
   ]
 }

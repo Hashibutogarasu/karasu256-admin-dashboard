@@ -30,14 +30,6 @@ export default ({ mode }: { mode: string }) => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
         },
-        '/api-json': {
-          target: `${env.VITE_API_HOST}/api-json`,
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api-json/, ''),
-          headers: {
-            accept: 'application/json',
-          },
-        },
       }
     },
   })
