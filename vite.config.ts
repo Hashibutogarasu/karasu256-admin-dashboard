@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react-swc'
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
 
 export default ({ mode }: { mode: string }) => {
-  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+  const env = loadEnv(mode, process.cwd());
 
   // import.meta.env.VITE_NAME available here with: process.env.VITE_NAME
   // import.meta.env.VITE_PORT available here with: process.env.VITE_PORT
@@ -26,7 +26,7 @@ export default ({ mode }: { mode: string }) => {
     server: {
       proxy: {
         '/api': {
-          target: process.env.VITE_API_HOST,
+          target: env.VITE_API_HOST,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
         }

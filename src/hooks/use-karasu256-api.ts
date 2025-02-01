@@ -1,20 +1,20 @@
 import { APIClient } from '@karasu-lab/karasu256-api-client'
 
+export function useAPIWithCredentials() {
+  const api = new APIClient({
+    HEADERS: {
+      'Authorization': import.meta.env.DEV ? `Bearer ${import.meta.env.VITE_API_BEARER}` : `Bearer ${sessionStorage.getItem('accessToken')}`
+    },
+    BASE: `${import.meta.env.VITE_BASE_URL}/api`
+  });
+
+  return api;
+}
+
 export function useKarasu256API() {
-  const api = new APIClient();
-
-  api.characters.httpRequest.config.BASE = `${import.meta.env.BASE_URL}/api`
-
-  if (import.meta.env.DEV) {
-    api.characters.httpRequest.config.HEADERS = {
-      Authorization: `Bearer ${import.meta.env.VITE_API_BEARER}`
-    }
-  }
-  else {
-    api.characters.httpRequest.config.HEADERS = {
-      Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`
-    }
-  }
+  const api = new APIClient({
+    BASE: `${import.meta.env.VITE_BASE_URL}/api`
+  });
 
   return api;
 }

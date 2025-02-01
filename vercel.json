@@ -3,9 +3,13 @@
       "silent": true
   },
   "rewrites": [
-      {
-          "source": "(.*)",
-          "destination": "/index.html"
-      }
+    {
+      "source": "/api/:path(.*)",
+      "destination": "https://api.karasu256.com/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
   ]
 }

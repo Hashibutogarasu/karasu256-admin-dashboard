@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useKarasu256API } from "@/hooks/use-karasu256-api";
+import { useAPIWithCredentials } from "@/hooks/use-karasu256-api";
 import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type Gallery } from "@karasu-lab/karasu256-api-client";
@@ -20,7 +20,7 @@ const gallerySchema = z.object({
 });
 
 export default function Gallery() {
-  const api = useKarasu256API();
+  const api = useAPIWithCredentials();
   const [galleries, setGalleries] = useState<Gallery[]>([]);
   const [loading, setLoading] = useState(true);
 
