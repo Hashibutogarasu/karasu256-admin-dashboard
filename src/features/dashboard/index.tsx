@@ -5,14 +5,13 @@ import { TopNav } from '@/components/layout/top-nav'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-import { UserData } from '@/components/layout/types'
 import { useKarasu256API } from '@/hooks/use-karasu256-api'
 import { useEffect, useState } from 'react'
 import { Character, Weapon } from '@karasu-lab/karasu256-api-client'
 import { Characters } from './components/characters'
 import { Weapons } from './components/weapons'
 
-export default function Dashboard({ userProfile }: { userProfile: UserData }) {
+export default function Dashboard() {
   const api = useKarasu256API()
 
   const [characters, setCharacters] = useState<Character[]>([])
@@ -46,7 +45,7 @@ export default function Dashboard({ userProfile }: { userProfile: UserData }) {
         <div className='ml-auto flex items-center space-x-4'>
           <Search />
           <ThemeSwitch />
-          <ProfileDropdown userProfile={userProfile} />
+          <ProfileDropdown />
         </div>
       </Header>
 

@@ -12,16 +12,17 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useEffect, useState } from 'react'
-import { UserData } from './layout/types'
+import { useUserProfile } from '@/context/user-profile-context'
 
-export function ProfileDropdown({ userProfile }: { userProfile: UserData }) {
+export function ProfileDropdown() {
   const [loading, setLoading] = useState(true)
+  const user = useUserProfile()
 
   useEffect(() => {
     if (loading) {
       setLoading(false)
     }
-  }, [userProfile, loading])
+  }, [user, loading])
 
   return (
     loading ? null :
@@ -29,17 +30,17 @@ export function ProfileDropdown({ userProfile }: { userProfile: UserData }) {
       <DropdownMenuTrigger asChild>
         <Button variant='ghost' className='relative h-8 w-8 rounded-full'>
           <Avatar className='h-8 w-8'>
-              <AvatarImage src={userProfile?.picture} alt={userProfile?.nickname} />
-              <AvatarFallback>{`${userProfile?.nickname![0]}${userProfile?.nickname![1].toUpperCase()}`}</AvatarFallback>
+              <AvatarImage src={user?.picture} alt={user?.nickname} />
+              <AvatarFallback>{`${user?.nickname![0]}${user?.nickname![1].toUpperCase()}`}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-56' align='end' forceMount>
         <DropdownMenuLabel className='font-normal'>
           <div className='flex flex-col space-y-1'>
-              <p className='text-sm font-medium leading-none'>{userProfile?.nickname}</p>
+              <p className='text-sm font-medium leading-none'>{user?.nickname}</p>
             <p className='text-xs leading-none text-muted-foreground'>
-                {userProfile?.email}
+                {user?.email}
             </p>
           </div>
         </DropdownMenuLabel>
