@@ -151,8 +151,8 @@ export default function Gallery() {
                       {field.value ? field.value.name : 'Select a character'}
                     </Button>
                   </DropdownMenuTrigger>
-                  <ScrollArea>
-                    <DropdownMenuContent>
+                  <DropdownMenuContent>
+                    <ScrollArea>
                       <DropdownMenuItem onSelect={() => field.onChange(undefined)}>
                         None
                       </DropdownMenuItem>
@@ -163,8 +163,8 @@ export default function Gallery() {
                           </DropdownMenuItem>
                         ))
                       }
-                    </DropdownMenuContent>
-                  </ScrollArea>
+                    </ScrollArea>
+                  </DropdownMenuContent>
                 </DropdownMenu>
               </div>
             )}>
