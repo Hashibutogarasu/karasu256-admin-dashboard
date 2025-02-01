@@ -27,7 +27,7 @@ export default function Dashboard({ userProfile }: { userProfile: UserData }) {
 
     async function loadWeapons() {
       const weapons = await api.weapons.weaponsControllerGet({ query: {} })
-      setWeapons(weapons.slice(0, 5))
+      setWeapons(weapons.sort((a, b) => a.id - b.id).reverse().slice(0, 5))
     }
 
     if (!loaded) {
