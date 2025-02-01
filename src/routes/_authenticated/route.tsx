@@ -9,7 +9,6 @@ import { UserContext } from '@/context/user-context'
 import { UserProfileProvider } from '@/context/user-profile-context'
 import { useUser } from '@/hooks/use-user'
 import UnauthorisedError from '@/features/errors/unauthorized-error'
-import { useEffect, useState } from 'react'
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 export const Route = createFileRoute('/_authenticated')({
@@ -17,16 +16,11 @@ export const Route = createFileRoute('/_authenticated')({
 })
 
 function RouteComponent() {
-  const [loading, setLoading] = useState(true)
-  const { user, userProfile } = useUser()
-
-  useEffect(() => {
-    setLoading(false)
-  }, [user, userProfile])
+  const { user, userProfile, error } = useUser()
 
   const defaultOpen = Cookies.get('sidebar:state') !== 'false'
-  return !loading ? userProfile ? (
-    <UserContext user={user}>
+  if (user && userProfile && !error) {
+    return <UserContext user={user}>
       <UserProfileProvider user={userProfile}>
         <SearchProvider>
           <SidebarProvider defaultOpen={defaultOpen}>
@@ -50,5 +44,11 @@ function RouteComponent() {
         </SearchProvider>
       </UserProfileProvider>
     </UserContext>
-  ) : <UnauthorisedError /> : <LoadingSpinner />
+  }
+  else if (error) {
+    return <UnauthorisedError />
+  }
+  else {
+    return <LoadingSpinner />
+  }
 }
