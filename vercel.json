@@ -8,11 +8,7 @@
       "destination": "https://api.karasu256.com/:path*"
     },
     {
-      "source": "/wiki/:path*",
-      "destination": "/"
-    },
-    {
-      "source": "/settings",
+      "source": "/(.*)",
       "destination": "/"
     }
   ]
