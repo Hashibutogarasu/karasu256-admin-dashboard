@@ -27,6 +27,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     setIsLoading(true)
 
     signOut();
+    sessionStorage.clear();
     toast({
       title: 'Success',
       description: 'You have successfully signed out.',
