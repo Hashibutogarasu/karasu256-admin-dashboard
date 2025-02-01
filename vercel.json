@@ -8,12 +8,8 @@
       "destination": "https://api.karasu256.com/:path*"
     },
     {
-      "source": "/wiki",
+      "source": "/wiki/:path*",
       "destination": "/"
-    },
-    {
-      "source": "/wiki/gallery",
-      "destination": "/gallery"
     },
     {
       "source": "/settings",
