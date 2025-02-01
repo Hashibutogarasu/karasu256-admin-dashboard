@@ -1,11 +1,13 @@
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAPIWithCredentials } from "@/hooks/use-karasu256-api";
+import { useAPIWithCredentials, useKarasu256API } from "@/hooks/use-karasu256-api";
 import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type Gallery } from "@karasu-lab/karasu256-api-client";
+import { Character, type Gallery } from "@karasu-lab/karasu256-api-client";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,56 +18,100 @@ const gallerySchema = z.object({
       file => ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type),
       'File must be an image',
     ),
+  filename: z.string().nonempty(),
   character: z.any().optional(),
 });
 
 export default function Gallery() {
   const api = useAPIWithCredentials();
-  const [galleries, setGalleries] = useState<Gallery[]>([]);
-  const [loading, setLoading] = useState(true);
+  const publicAPI = useKarasu256API();
+  const [galleries, setGalleries] = useState<Gallery[] | null>(null);
+  const [characters, setCharacters] = useState<Character[] | null>(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedGallery, setSelectedGallery] = useState<Gallery | null>(null);
+  const [loaded, setLoaded] = useState(false);
+  const [reloading, setReloading] = useState(false);
 
   const form = useForm<z.infer<typeof gallerySchema>>({
     resolver: zodResolver(gallerySchema),
+    mode: 'onSubmit',
+  })
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const reloadForm = useForm<any>({
+    mode: 'onSubmit',
   })
 
   useEffect(() => {
-    if (loading) {
-      api.galleries.galleriesControllerGet({ query: {} }).then((response) => {
-        setGalleries(response);
-
-        setLoading(false);
-      })
+    async function loadCharacters() {
+      if (!characters) {
+        const characters = await publicAPI.characters.charactersControllerGet({ query: {} });
+        setCharacters(characters);
+      }
     }
-    setLoading(false);
-  }, [api.galleries, galleries, loading])
 
-  function onSubmit(data: z.infer<typeof gallerySchema>) {
-    toast({
-      title: 'Uploading file...',
-      variant: 'default',
-    })
-    setLoading(true);
+    async function loadGalleries() {
+      if (!galleries) {
+        const galleries = await api.galleries.galleriesControllerGet({ query: {} });
+        setGalleries(galleries);
+      }
+    }
 
-    api.galleries.galleriesControllerUploadFile({
-      formData: {
-        file: data.file,
-      },
-    }).then((res) => {
-      setGalleries([...galleries, res]);
+    if (!loaded) {
+      loadCharacters();
+      loadGalleries();
+      setLoaded(true);
+    }
 
-      toast({
-        title: 'File uploaded successfully',
-        variant: 'default',
+    return function cleanup() { }
+  }, [api.galleries, characters, galleries, loaded, publicAPI.characters, reloading])
+
+  async function onSubmit(data: z.infer<typeof gallerySchema>) {
+    if (data.filename) {
+      const formattedFile = new File([data.file], data.filename, {
+        type: data.file.type,
       });
-    }).catch((error) => {
-      toast({
-        title: `Error: ${error.message}`,
-        variant: 'destructive',
-      });
-    });
 
+      try {
+        toast({
+          title: 'Uploading file...',
+          description: `Uploading file: ${data.file.name}`,
+          variant: 'default',
+        })
 
-    setLoading(false);
+        const file = await api.galleries.galleriesControllerUploadFile({
+          formData: {
+            file: formattedFile,
+          },
+        });
+
+        toast({
+          title: `File uploaded successfully: ${file.key}`,
+          variant: 'default',
+        })
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      catch (error: any) {
+        toast({
+          title: 'Failed to upload file',
+          description: error.message,
+          variant: 'destructive',
+        })
+      }
+    }
+  }
+
+  async function onSubmitReloading() {
+    setReloading(true);
+
+    if (galleries) {
+      setGalleries(null);
+
+      const galleries = await api.galleries.galleriesControllerGet({ query: {} });
+      setGalleries(galleries);
+    }
+
+    return;
   }
 
   return (
@@ -84,27 +130,97 @@ export default function Gallery() {
         </div>
         <div className="mt-4">
           <FormField control={form.control}
-            name="character"
+            name="filename"
             render={({ field }) => (
               <div>
-                <Label form="character">Character</Label>
+                <Label form="filename">Filename</Label>
                 <Input {...field} />
               </div>
             )}>
           </FormField>
         </div>
         <div className="mt-4">
-          <Button
+          <FormField control={form.control}
+            name="character"
+            render={({ field }) => (
+              <div>
+                <DropdownMenu modal={false}>
+                  <DropdownMenuTrigger>
+                    <Button>
+                      {field.value ? field.value.name : 'Select a character'}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem onSelect={() => field.onChange(undefined)}>
+                      None
+                    </DropdownMenuItem>
+                    {
+                      characters?.map((character) => (
+                        <DropdownMenuItem key={character.id} onSelect={() => field.onChange(character)}>
+                          {character.name}
+                        </DropdownMenuItem>
+                      ))
+                    }
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            )}>
+          </FormField>
+        </div>
+        <div className="mt-4">
+          <Button disabled={!form.formState.errors}
             onClick={form.handleSubmit(onSubmit)}>
             Submit
           </Button>
         </div>
       </Form>
+      <ConfirmDialog
+        open={openDialog}
+        onOpenChange={setOpenDialog}
+        handleConfirm={async () => {
+          if (selectedGallery) {
+            toast({
+              title: 'Deleting gallery...',
+              variant: 'default',
+            })
+            await api.galleries.galleriesControllerDelete({ id: selectedGallery.id.toString() });
+
+            if (galleries) {
+              setGalleries(galleries.filter(gallery => gallery.id !== selectedGallery.id));
+            }
+
+            toast({
+              title: 'Gallery deleted successfully',
+              variant: 'default',
+            });
+
+            setSelectedGallery(null);
+            setOpenDialog(false);
+          }
+        }}
+        title={"Delete gallery?"}
+        desc={"Are you sure you want to delete this gallery?"}
+      >
+        <div>
+          <img src={`${import.meta.env.VITE_CDN_URL}/${selectedGallery?.key}`} alt={selectedGallery?.alt} width={100} />
+          <p>{selectedGallery?.alt}</p>
+        </div>
+      </ConfirmDialog>
+      <Form {...reloadForm}>
+        <div className="mt-10 mb-10">
+          <Button type="submit" onClick={reloadForm.handleSubmit(onSubmitReloading)}>
+            Reload
+          </Button>
+        </div>
+      </Form>
       <div className="mt-10 grid grid-cols-7">
         {
-          galleries.map((gallery) => (
-            <div key={gallery.id}>
-              <img src={`https://cdn.karasu256.com/${gallery.key}`} alt={gallery.alt} width={100} />
+          galleries?.map((gallery) => (
+            <div key={gallery.id} onClick={() => {
+              setSelectedGallery(gallery);
+              setOpenDialog(true);
+            }}>
+              <img src={`${import.meta.env.VITE_CDN_URL}/${gallery.key}`} alt={gallery.alt} width={100} />
             </div>
           ))
         }
