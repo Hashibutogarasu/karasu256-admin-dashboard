@@ -22,7 +22,7 @@ export default function Dashboard({ userProfile }: { userProfile: UserData }) {
   useEffect(() => {
     async function loadCharacters() {
       const characters = await api.characters.charactersControllerGet({ query: {} })
-      setCharacters(characters.slice(0, 5))
+      setCharacters(characters.sort((a, b) => a.id - b.id).reverse().slice(0, 5))
     }
 
     async function loadWeapons() {
