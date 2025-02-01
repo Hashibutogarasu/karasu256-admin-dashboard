@@ -41,9 +41,6 @@ const AuthenticatedSettingsRouteLazyImport = createFileRoute(
 const AuthenticatedWikiIndexLazyImport = createFileRoute(
   '/_authenticated/wiki/',
 )()
-const AuthenticatedUsersIndexLazyImport = createFileRoute(
-  '/_authenticated/users/',
-)()
 const AuthenticatedSettingsIndexLazyImport = createFileRoute(
   '/_authenticated/settings/',
 )()
@@ -202,15 +199,6 @@ const AuthenticatedWikiIndexLazyRoute = AuthenticatedWikiIndexLazyImport.update(
 ).lazy(() =>
   import('./routes/_authenticated/wiki/index.lazy').then((d) => d.Route),
 )
-
-const AuthenticatedUsersIndexLazyRoute =
-  AuthenticatedUsersIndexLazyImport.update({
-    id: '/users/',
-    path: '/users/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any).lazy(() =>
-    import('./routes/_authenticated/users/index.lazy').then((d) => d.Route),
-  )
 
 const AuthenticatedSettingsIndexLazyRoute =
   AuthenticatedSettingsIndexLazyImport.update({
@@ -483,13 +471,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsIndexLazyImport
       parentRoute: typeof AuthenticatedSettingsRouteLazyImport
     }
-    '/_authenticated/users/': {
-      id: '/_authenticated/users/'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof AuthenticatedUsersIndexLazyImport
-      parentRoute: typeof AuthenticatedRouteImport
-    }
     '/_authenticated/wiki/': {
       id: '/_authenticated/wiki/'
       path: '/wiki'
@@ -543,7 +524,6 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedWikiGalleryLazyRoute: typeof AuthenticatedWikiGalleryLazyRoute
   AuthenticatedHelpCenterIndexLazyRoute: typeof AuthenticatedHelpCenterIndexLazyRoute
-  AuthenticatedUsersIndexLazyRoute: typeof AuthenticatedUsersIndexLazyRoute
   AuthenticatedWikiIndexLazyRoute: typeof AuthenticatedWikiIndexLazyRoute
   AuthenticatedWikiRouteLaztRoute: typeof AuthenticatedWikiRouteLaztRoute
 }
@@ -554,7 +534,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedWikiGalleryLazyRoute: AuthenticatedWikiGalleryLazyRoute,
   AuthenticatedHelpCenterIndexLazyRoute: AuthenticatedHelpCenterIndexLazyRoute,
-  AuthenticatedUsersIndexLazyRoute: AuthenticatedUsersIndexLazyRoute,
   AuthenticatedWikiIndexLazyRoute: AuthenticatedWikiIndexLazyRoute,
   AuthenticatedWikiRouteLaztRoute: AuthenticatedWikiRouteLaztRoute,
 }
@@ -587,7 +566,6 @@ export interface FileRoutesByFullPath {
   '/wiki/gallery': typeof AuthenticatedWikiGalleryLazyRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/settings/': typeof AuthenticatedSettingsIndexLazyRoute
-  '/users': typeof AuthenticatedUsersIndexLazyRoute
   '/wiki': typeof AuthenticatedWikiIndexLazyRoute
   '/wiki/route/lazt': typeof AuthenticatedWikiRouteLaztRoute
 }
@@ -615,7 +593,6 @@ export interface FileRoutesByTo {
   '/wiki/gallery': typeof AuthenticatedWikiGalleryLazyRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/settings': typeof AuthenticatedSettingsIndexLazyRoute
-  '/users': typeof AuthenticatedUsersIndexLazyRoute
   '/wiki': typeof AuthenticatedWikiIndexLazyRoute
   '/wiki/route/lazt': typeof AuthenticatedWikiRouteLaztRoute
 }
@@ -647,7 +624,6 @@ export interface FileRoutesById {
   '/_authenticated/wiki/gallery': typeof AuthenticatedWikiGalleryLazyRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexLazyRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexLazyRoute
-  '/_authenticated/users/': typeof AuthenticatedUsersIndexLazyRoute
   '/_authenticated/wiki/': typeof AuthenticatedWikiIndexLazyRoute
   '/_authenticated/wiki/route/lazt': typeof AuthenticatedWikiRouteLaztRoute
 }
@@ -679,7 +655,6 @@ export interface FileRouteTypes {
     | '/wiki/gallery'
     | '/help-center'
     | '/settings/'
-    | '/users'
     | '/wiki'
     | '/wiki/route/lazt'
   fileRoutesByTo: FileRoutesByTo
@@ -706,7 +681,6 @@ export interface FileRouteTypes {
     | '/wiki/gallery'
     | '/help-center'
     | '/settings'
-    | '/users'
     | '/wiki'
     | '/wiki/route/lazt'
   id:
@@ -736,7 +710,6 @@ export interface FileRouteTypes {
     | '/_authenticated/wiki/gallery'
     | '/_authenticated/help-center/'
     | '/_authenticated/settings/'
-    | '/_authenticated/users/'
     | '/_authenticated/wiki/'
     | '/_authenticated/wiki/route/lazt'
   fileRoutesById: FileRoutesById
@@ -812,7 +785,6 @@ export const routeTree = rootRoute
         "/_authenticated/",
         "/_authenticated/wiki/gallery",
         "/_authenticated/help-center/",
-        "/_authenticated/users/",
         "/_authenticated/wiki/",
         "/_authenticated/wiki/route/lazt"
       ]
@@ -906,10 +878,6 @@ export const routeTree = rootRoute
     "/_authenticated/settings/": {
       "filePath": "_authenticated/settings/index.lazy.tsx",
       "parent": "/_authenticated/settings"
-    },
-    "/_authenticated/users/": {
-      "filePath": "_authenticated/users/index.lazy.tsx",
-      "parent": "/_authenticated"
     },
     "/_authenticated/wiki/": {
       "filePath": "_authenticated/wiki/index.lazy.tsx",
