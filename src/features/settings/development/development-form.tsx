@@ -16,7 +16,7 @@ import { useCognito } from '@/hooks/use-cognito'
 import { useState } from 'react'
 import { AuthenticationDetails, CognitoUser } from 'amazon-cognito-identity-js'
 import { Textarea } from '@/components/ui/textarea'
-import { useUserProfile } from '@/context/user-profile-context'
+import { UserData } from '@/components/layout/types'
 
 const developerSettingsFormSchema = z.object({
   password: z.string().min(8),
@@ -25,9 +25,8 @@ const developerSettingsFormSchema = z.object({
 
 type DeveloperSettingsFormValues = z.infer<typeof developerSettingsFormSchema>
 
-export default function DeveloperSettingsForm() {
+export default function DeveloperSettingsForm({ user }: { user: UserData }) {
   const userPool = useCognito()
-  const profile = useUserProfile()
 
   const [access_token, setAccessToken] = useState<string>()
   const [copySuccess, setCopySuccess] = useState(false)
@@ -41,16 +40,16 @@ export default function DeveloperSettingsForm() {
   })
 
   function onSubmit(data: DeveloperSettingsFormValues) {
-    if (profile && profile.email) {
+    if (user && user.email) {
       const authDetails = new AuthenticationDetails({
-        Username: profile.email,
+        Username: user.email,
         Password: data.password
       })
-      const user = new CognitoUser({
-        Username: profile?.email,
+      const cognitoUser = new CognitoUser({
+        Username: user?.email,
         Pool: userPool!
       })
-      user.authenticateUser(authDetails, {
+      cognitoUser.authenticateUser(authDetails, {
         onSuccess: (result) => {
           const accessToken = result.getAccessToken().getJwtToken()
           setAccessToken(accessToken)

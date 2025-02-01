@@ -16,7 +16,7 @@ import { useCognito } from '@/hooks/use-cognito'
 import { AuthenticationDetails, CognitoUser, CognitoUserAttribute } from 'amazon-cognito-identity-js'
 import { useState } from 'react'
 import { toast } from '@/hooks/use-toast'
-import { useUserProfile } from '@/context/user-profile-context'
+import { UserData } from '@/components/layout/types'
 
 const profileFormSchema = z.object({
   email: z
@@ -37,8 +37,7 @@ const profileFormSchema = z.object({
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
-export default function ProfileForm() {
-  const userProfile = useUserProfile()
+export default function ProfileForm({ user }: { user: UserData }) {
   const userPool = useCognito()
 
   const [loading, setLoading] = useState(false)
@@ -46,9 +45,9 @@ export default function ProfileForm() {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      picture: userProfile?.picture || '',
-      email: userProfile?.email || '',
-      nickname: userProfile?.nickname || '',
+      picture: user?.picture || '',
+      email: user?.email || '',
+      nickname: user?.nickname || '',
     },
     mode: 'onChange',
   })
