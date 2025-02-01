@@ -40,9 +40,9 @@ const formSchema = z.object({
 })
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const userPool = useCognito()
+  const [loaded, setLoaded] = useState<boolean>(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,42 +53,41 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   })
 
   function onSubmit(data: z.infer<typeof formSchema>) {
-    setIsLoading(true)
-    const authDetails = new AuthenticationDetails({
-      Username: data.email,
-      Password: data.password
-    })
-    const user = new CognitoUser({
-      Username: data.email,
-      Pool: userPool!,
-      Storage: sessionStorage
-    })
+    if (!loaded) {
+      const authDetails = new AuthenticationDetails({
+        Username: data.email,
+        Password: data.password
+      })
+      const user = new CognitoUser({
+        Username: data.email,
+        Pool: userPool!,
+        Storage: sessionStorage
+      })
 
-    sessionStorage.setItem('username', data.email)
-    sessionStorage.setItem('email', data.email)
-    sessionStorage.setItem('password', data.password)
+      sessionStorage.setItem('username', data.email)
+      sessionStorage.setItem('email', data.email)
+      sessionStorage.setItem('password', data.password)
 
-    user?.authenticateUser(authDetails, {
-      onSuccess: function () {
-        toast({
-          title: 'Success',
-          description: <div>
-            <p>{'You have successfully logged in.'}</p>
-          </div>,
-        })
-        router.navigate({ to: '/' })
-      },
-      onFailure: function () {
-        toast({
-          title: 'Error',
-          description: 'Invalid email or password.',
-        })
-      }
-    });
+      user?.authenticateUser(authDetails, {
+        onSuccess: function () {
+          toast({
+            title: 'Success',
+            description: <div>
+              <p>{'You have successfully logged in.'}</p>
+            </div>,
+          })
+          router.navigate({ to: '/' })
+        },
+        onFailure: function () {
+          toast({
+            title: 'Error',
+            description: 'Invalid email or password.',
+          })
+        }
+      });
+    }
 
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 3000)
+    setLoaded(true)
   }
 
   return (
@@ -130,7 +129,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 </FormItem>
               )}
             />
-            <Button className='mt-2' disabled={isLoading}>
+            <Button className='mt-2' disabled={loaded}>
               Login
             </Button>
           </div>

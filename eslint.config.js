@@ -29,6 +29,7 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       'no-console': 'error',
+      'eslint-disable-next-line': 'off'
     },
   }
 )
