@@ -13,6 +13,7 @@ export function useUser() {
   const [userProfile, setUserProfile] = useState<UserData | null>(null)
   const [user, setUser] = useState<CognitoUser | null>(null)
   const [authenticated, setAuthenticated] = useState<boolean>(false)
+  const [error, setError] = useState<boolean | null>(null)
 
   useEffect(() => {
     const currentUser = cognito?.getCurrentUser()
@@ -37,7 +38,15 @@ export function useUser() {
       })
 
       user.authenticateUser(authenticationDetails, {
-        onSuccess: async (session) => {
+        onSuccess: async (session, error) => {
+          if (error) {
+            setError(error)
+            toast({
+              title: 'Error',
+              description: 'Failed to authenticate user',
+            })
+            router.navigate({ to: '/sign-in' })
+          }
           const accessToken = session.getAccessToken().getJwtToken()
           const verify = await verfier.verify(accessToken);
 
@@ -53,8 +62,9 @@ export function useUser() {
 
           setUser(user)
 
-          user.getUserAttributes((err, attributes) => {
-            if (err) {
+          user.getUserAttributes((error, attributes) => {
+            if (error) {
+              setError(!!error)
               toast({
                 title: 'Error',
                 description: 'Failed to fetch user attributes',
@@ -85,7 +95,8 @@ export function useUser() {
             }
           })
         },
-        onFailure: () => {
+        onFailure: (error) => {
+          setError(error)
           toast({
             title: 'Error',
             description: 'Failed to authenticate user',
@@ -94,8 +105,7 @@ export function useUser() {
         },
       })
     }
-
   }, [authenticated, cognito, router, user, verfier])
 
-  return { user, userProfile, authenticated }
+  return { user, userProfile, authenticated, error }
 }
