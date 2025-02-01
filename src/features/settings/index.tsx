@@ -13,11 +13,9 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import SidebarNav from './components/sidebar-nav'
-import { useUserProfile } from '@/context/user-profile-context'
+import { UserData } from '@/components/layout/types'
 
-export default function Settings() {
-  const user = useUserProfile()
-
+export default function Settings({ user }: { user: UserData }) {
   return (
     <>
       {/* ===== Top Heading ===== */}
