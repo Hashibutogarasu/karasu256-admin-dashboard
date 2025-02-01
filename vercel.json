@@ -12,6 +12,10 @@
       "destination": "/"
     },
     {
+      "source": "/wiki/gallery",
+      "destination": "/gallery"
+    },
+    {
       "source": "/settings",
       "destination": "/"
     }
