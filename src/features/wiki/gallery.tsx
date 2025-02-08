@@ -1,10 +1,9 @@
 import { ConfirmDialog } from "@/components/confirm-dialog";
+import { SelectDropdown } from "@/components/select-dropdown";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAPIWithCredentials, useKarasu256API } from "@/hooks/use-karasu256-api";
 import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,7 +20,7 @@ const gallerySchema = z.object({
     ),
   alt: z.string(),
   url: z.string().url().optional(),
-  filename: z.string(),
+  filename: z.string().optional(),
   character: z.any().optional(),
 });
 
@@ -37,10 +36,6 @@ export default function Gallery() {
 
   const form = useForm<z.infer<typeof gallerySchema>>({
     resolver: zodResolver(gallerySchema),
-    mode: 'onSubmit',
-  })
-
-  const reloadForm = useForm<any>({
     mode: 'onSubmit',
   })
 
@@ -192,36 +187,21 @@ export default function Gallery() {
             name="character"
             render={({ field }) => (
               <div>
-                <DropdownMenu modal={false}>
-                  <DropdownMenuTrigger>
-                    <Button>
-                      {field.value ? field.value.name : 'Select a character'}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <ScrollArea>
-                      <DropdownMenuItem onSelect={() => field.onChange(undefined)}>
-                        None
-                      </DropdownMenuItem>
-                      {
-                        characters?.map((character) => (
-                          <DropdownMenuItem key={character.id} onSelect={() => field.onChange(character)}>
-                            {character.name}
-                          </DropdownMenuItem>
-                        ))
-                      }
-                    </ScrollArea>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <SelectDropdown placeholder="Select character" items={
+                  characters?.map(character => ({
+                    label: character.name,
+                    value: character.id.toString(),
+                  }))
+                } onValueChange={field.onChange} defaultValue={field.value?.toString()} />
               </div>
             )}>
           </FormField>
-        </div>
-        <div className="mt-4">
-          <Button disabled={!form.formState.errors}
-            onClick={form.handleSubmit(onSubmit)}>
-            Submit
-          </Button>
+          <div className="mt-4">
+            <Button disabled={!form.formState.errors}
+              onClick={form.handleSubmit(onSubmit)}>
+              Submit
+            </Button>
+          </div>
         </div>
       </Form>
       <ConfirmDialog
@@ -256,13 +236,11 @@ export default function Gallery() {
           <p>{selectedGallery?.alt}</p>
         </div>
       </ConfirmDialog>
-      <Form {...reloadForm}>
-        <div className="mt-10 mb-10">
-          <Button type="submit" onClick={reloadForm.handleSubmit(onSubmitReloading)}>
-            Reload
-          </Button>
-        </div>
-      </Form>
+      <div className="mt-10 mb-10">
+        <Button onClick={onSubmitReloading}>
+          Reload
+        </Button>
+      </div>
       <div className="mt-10 grid grid-cols-7">
         {
           galleries?.map((gallery) => (
