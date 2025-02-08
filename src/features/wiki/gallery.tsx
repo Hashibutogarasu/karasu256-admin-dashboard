@@ -8,7 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAPIWithCredentials, useKarasu256API } from "@/hooks/use-karasu256-api";
 import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Character, type Gallery } from "@karasu-lab/karasu256-api-client";
+import { GICharacter, type Gallery } from "@karasu-lab/karasu256-api-client";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -27,7 +27,7 @@ export default function Gallery() {
   const api = useAPIWithCredentials();
   const publicAPI = useKarasu256API();
   const [galleries, setGalleries] = useState<Gallery[] | null>(null);
-  const [characters, setCharacters] = useState<Character[] | null>(null);
+  const [characters, setCharacters] = useState<GICharacter[] | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedGallery, setSelectedGallery] = useState<Gallery | null>(null);
   const [loaded, setLoaded] = useState(false);
@@ -38,7 +38,6 @@ export default function Gallery() {
     mode: 'onSubmit',
   })
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const reloadForm = useForm<any>({
     mode: 'onSubmit',
   })
@@ -46,14 +45,14 @@ export default function Gallery() {
   useEffect(() => {
     async function loadCharacters() {
       if (!characters) {
-        const characters = await publicAPI.characters.charactersControllerGet({ query: {} });
+        const characters = await publicAPI.characters.charactersControllerGet({});
         setCharacters(characters);
       }
     }
 
     async function loadGalleries() {
       if (!galleries) {
-        const galleries = await api.galleries.galleriesControllerGet({ query: {} });
+        const galleries = await publicAPI.galleries.galleriesControllerGet({});
         setGalleries(galleries);
       }
     }
@@ -65,7 +64,7 @@ export default function Gallery() {
     }
 
     return function cleanup() { }
-  }, [api.galleries, characters, galleries, loaded, publicAPI.characters, reloading])
+  }, [api.galleries, characters, galleries, loaded, publicAPI.characters, publicAPI.galleries, reloading])
 
   async function onSubmit(data: z.infer<typeof gallerySchema>) {
     if (data.filename) {
@@ -79,19 +78,16 @@ export default function Gallery() {
           description: `Uploading file: ${data.file.name}`,
           variant: 'default',
         })
+        const comment = data.character ? `Character: ${data.character.name}` : '';
+        const outletId = data.character ? data.character.id : undefined;
 
-        const file = await api.galleries.galleriesControllerUploadFile({
-          formData: {
-            file: formattedFile,
-          },
-        });
+        await api.galleries.galleriesControllerUploadFile(comment, outletId, formattedFile);
 
         toast({
-          title: `File uploaded successfully: ${file.key}`,
+          title: `File uploaded successfully`,
           variant: 'default',
         })
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       catch (error: any) {
         toast({
           title: 'Failed to upload file',
@@ -108,7 +104,7 @@ export default function Gallery() {
     if (galleries) {
       setGalleries(null);
 
-      const galleries = await api.galleries.galleriesControllerGet({ query: {} });
+      const galleries = await publicAPI.galleries.galleriesControllerGet({});
       setGalleries(galleries);
     }
 
@@ -186,7 +182,7 @@ export default function Gallery() {
               title: 'Deleting gallery...',
               variant: 'default',
             })
-            await api.galleries.galleriesControllerDelete({ id: selectedGallery.id.toString() });
+            await api.galleries.galleriesControllerDelete(selectedGallery.id.toString());
 
             if (galleries) {
               setGalleries(galleries.filter(gallery => gallery.id !== selectedGallery.id));

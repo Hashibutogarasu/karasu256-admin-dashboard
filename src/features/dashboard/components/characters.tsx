@@ -6,9 +6,9 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 
-import { Character } from "@karasu-lab/karasu256-api-client";
+import { GICharacter } from "@karasu-lab/karasu256-api-client";
 
-export function Characters({ characters }: { characters: Character[] }) {
+export function Characters({ characters }: { characters: GICharacter[] }) {
   return <Card>
     <CardHeader>
       <CardTitle>Recent Updated Characters</CardTitle>

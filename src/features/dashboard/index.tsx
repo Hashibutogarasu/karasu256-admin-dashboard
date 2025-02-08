@@ -7,26 +7,26 @@ import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { useKarasu256API } from '@/hooks/use-karasu256-api'
 import { useEffect, useState } from 'react'
-import { Character, Weapon } from '@karasu-lab/karasu256-api-client'
+import { GICharacter, Weapon } from '@karasu-lab/karasu256-api-client'
 import { Characters } from './components/characters'
 import { Weapons } from './components/weapons'
 
 export default function Dashboard() {
   const api = useKarasu256API()
 
-  const [characters, setCharacters] = useState<Character[]>([])
+  const [characters, setCharacters] = useState<GICharacter[]>([])
   const [weapons, setWeapons] = useState<Weapon[]>([])
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     async function loadCharacters() {
       const characters = await api.characters.charactersControllerGet({ query: {} })
-      setCharacters(characters.sort((a, b) => a.id - b.id).reverse().slice(0, 5))
+      setCharacters(characters.sort((a: GICharacter, b: GICharacter) => a.id.toString().localeCompare(b.id)).reverse().slice(0, 5))
     }
 
     async function loadWeapons() {
       const weapons = await api.weapons.weaponsControllerGet({ query: {} })
-      setWeapons(weapons.sort((a, b) => a.id - b.id).reverse().slice(0, 5))
+      setWeapons(weapons.sort((a: Weapon, b: Weapon) => a.id.toString().localeCompare(b.id)).reverse().slice(0, 5))
     }
 
     if (!loaded) {

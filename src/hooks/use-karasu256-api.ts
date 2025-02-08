@@ -1,20 +1,23 @@
-import { APIClient } from '@karasu-lab/karasu256-api-client'
+import { GalleriesApi, CharactersApi, Configuration } from '@karasu-lab/karasu256-api-client'
+import { GalleriesApi as GalleriesAdminApi, Configuration as AdminConfiguration, CharactersApi as CharactersAdminApi } from '@karasu-lab/karasu256-api-admin-client'
+
 
 export function useAPIWithCredentials() {
-  const api = new APIClient({
-    HEADERS: {
-      'Authorization': import.meta.env.DEV ? `Bearer ${import.meta.env.VITE_API_BEARER}` : `Bearer ${sessionStorage.getItem('accessToken')}`
-    },
-    BASE: `${import.meta.env.VITE_BASE_URL}/api`
+  const config = new AdminConfiguration({
+    accessToken: (import.meta.env.DEV ? import.meta.env.VITE_API_BEARER : sessionStorage.getItem('accessToken'))!
   });
 
-  return api;
+  const galleries = new GalleriesAdminApi(config);
+  const characters = new CharactersAdminApi(config);
+
+  return { galleries, characters };
 }
 
 export function useKarasu256API() {
-  const api = new APIClient({
-    BASE: `${import.meta.env.VITE_BASE_URL}/api`
-  });
+  const config = new Configuration();
 
-  return api;
+  const galleries = new GalleriesApi(config);
+  const characters = new CharactersApi(config);
+
+  return { galleries, characters };
 }
