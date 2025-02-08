@@ -19,7 +19,9 @@ const gallerySchema = z.object({
       file => ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type),
       'File must be an image',
     ),
-  filename: z.string().nonempty(),
+  alt: z.string(),
+  url: z.string().url().optional(),
+  filename: z.string(),
   character: z.any().optional(),
 });
 
@@ -67,21 +69,48 @@ export default function Gallery() {
   }, [api.galleries, characters, galleries, loaded, publicAPI.characters, publicAPI.galleries, reloading])
 
   async function onSubmit(data: z.infer<typeof gallerySchema>) {
-    if (data.filename) {
-      const formattedFile = new File([data.file], data.filename, {
-        type: data.file.type,
-      });
+    toast({
+      title: 'Uploading file...',
+      description: `Uploading file: ${data.file.name}`,
+      variant: 'default',
+    })
 
+    if (data.file) {
+      if (data.filename) {
+        const formattedFile = new File([data.file], data.filename, {
+          type: data.file.type,
+        });
+
+        try {
+          const comment = data.character ? `Character: ${data.character.name}` : '';
+          const outletId = data.character ? data.character.id : undefined;
+
+          await api.galleries.galleriesControllerUploadFile(comment, outletId, formattedFile);
+
+          toast({
+            title: `File uploaded successfully`,
+            variant: 'default',
+          })
+        }
+        catch (error: any) {
+          toast({
+            title: 'Failed to upload file',
+            description: error.message,
+            variant: 'destructive',
+          })
+        }
+      }
+    }
+    else if (data.url) {
       try {
-        toast({
-          title: 'Uploading file...',
-          description: `Uploading file: ${data.file.name}`,
-          variant: 'default',
-        })
-        const comment = data.character ? `Character: ${data.character.name}` : '';
-        const outletId = data.character ? data.character.id : undefined;
+        const url = new URL(data.url);
 
-        await api.galleries.galleriesControllerUploadFile(comment, outletId, formattedFile);
+        await api.galleries.galleriesControllerCreate({
+          alt: data.alt,
+          key: data.url,
+          url: url.pathname,
+          character: data.character?.id,
+        });
 
         toast({
           title: `File uploaded successfully`,
@@ -121,6 +150,28 @@ export default function Gallery() {
               <div>
                 <Label form="url">File</Label>
                 <Input type="file" onChange={(e) => field.onChange(e.target.files?.[0])} />
+              </div>
+            )}>
+          </FormField>
+        </div>
+        <div className="mt-4">
+          <FormField control={form.control}
+            name="alt"
+            render={({ field }) => (
+              <div>
+                <Label form="alt">Alt</Label>
+                <Input {...field} />
+              </div>
+            )}>
+          </FormField>
+        </div>
+        <div className="mt-4">
+          <FormField control={form.control}
+            name="url"
+            render={({ field }) => (
+              <div>
+                <Label form="url">URL</Label>
+                <Input {...field} />
               </div>
             )}>
           </FormField>
