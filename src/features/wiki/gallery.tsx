@@ -17,7 +17,7 @@ const gallerySchema = z.object({
     .refine(
       file => ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type),
       'File must be an image',
-    ),
+  ).optional(),
   alt: z.string(),
   url: z.string().url().optional(),
   filename: z.string().optional(),
@@ -65,8 +65,7 @@ export default function Gallery() {
 
   async function onSubmit(data: z.infer<typeof gallerySchema>) {
     toast({
-      title: 'Uploading file...',
-      description: `Uploading file: ${data.file.name}`,
+      title: 'Creating gallery...',
       variant: 'default',
     })
 
