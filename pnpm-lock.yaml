@@ -18,14 +18,14 @@ importers:
         specifier: ^3.9.1
         version: 3.9.1(react-hook-form@7.54.0(react@19.0.0))
       '@karasu-lab/karasu256-api-admin-client':
-        specifier: 3.3.18
-        version: 3.3.18
+        specifier: 3.3.19
+        version: 3.3.19
       '@karasu-lab/karasu256-api-auth-client':
-        specifier: ^3.3.18
-        version: 3.3.18
+        specifier: ^3.3.19
+        version: 3.3.19
       '@karasu-lab/karasu256-api-client':
-        specifier: ^3.3.18
-        version: 3.3.18
+        specifier: ^3.3.19
+        version: 3.3.19
       '@radix-ui/react-alert-dialog':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.0.1)(@types/react@19.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1120,14 +1120,14 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@karasu-lab/karasu256-api-admin-client@3.3.18':
-    resolution: {integrity: sha512-TqVivUJU43+xUnGqSuqx9Pa+jQxxwd0XFGtVXW8d9NL7K16GLkH2KolDIUK/byb2s0ZfhNnlTeZKVR6DokJ8qA==}
+  '@karasu-lab/karasu256-api-admin-client@3.3.19':
+    resolution: {integrity: sha512-ZwCt4tFLyO3Qij0sPBDgMtvPKNVfwE7iyvy5xq0L0SFTZlp5ZAeS6vjb9DzAhyFjJsQSTQJB9gYDpJUnj15fCA==}
 
-  '@karasu-lab/karasu256-api-auth-client@3.3.18':
-    resolution: {integrity: sha512-THxTDFMRJQN5oIn8nSy6SIA4O7Oq/miW8Beb/bMe0SAxv+WZpITqUbVFdeSBxUHyMQrKs7NZ9HwY8Y21/gpF8A==}
+  '@karasu-lab/karasu256-api-auth-client@3.3.19':
+    resolution: {integrity: sha512-t54FqoMSIInGh09BR7GVAPyb0XtKTdAkPUIex9vlGp755b8bT/AjPDpV++OdPzYSafFux4xmk+rcKcrn1Fctxg==}
 
-  '@karasu-lab/karasu256-api-client@3.3.18':
-    resolution: {integrity: sha512-6Tqo8WTupfG727sS5ua4g98GDPNONjmGHrt74s2ICkmviwn6rVoCNtL5FJYyGC2KQ7Nbm0z4gEjmHhoRTxd4Dw==}
+  '@karasu-lab/karasu256-api-client@3.3.19':
+    resolution: {integrity: sha512-32gVSj6Wf8z8I6hmwErdwe0e87rNnM2zxpO29BRsLJ3No9YgYP71rKE2lumlwqhGWxzstQ/APKd23ORQmEHpaA==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -6125,11 +6125,11 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@karasu-lab/karasu256-api-admin-client@3.3.18': {}
+  '@karasu-lab/karasu256-api-admin-client@3.3.19': {}
 
-  '@karasu-lab/karasu256-api-auth-client@3.3.18': {}
+  '@karasu-lab/karasu256-api-auth-client@3.3.19': {}
 
-  '@karasu-lab/karasu256-api-client@3.3.18': {}
+  '@karasu-lab/karasu256-api-client@3.3.19': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:

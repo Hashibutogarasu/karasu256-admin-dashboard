@@ -20,12 +20,12 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function loadCharacters() {
-      const characters = await api.characters.charactersControllerGet({ query: {} })
+      const characters = await api.characters.charactersControllerGet({})
       setCharacters(characters.sort((a: GICharacter, b: GICharacter) => a.id.toString().localeCompare(b.id)).reverse().slice(0, 5))
     }
 
     async function loadWeapons() {
-      const weapons = await api.weapons.weaponsControllerGet({ query: {} })
+      const weapons = await api.weapons.weaponsControllerGet({});
       setWeapons(weapons.sort((a: Weapon, b: Weapon) => a.id.toString().localeCompare(b.id)).reverse().slice(0, 5))
     }
 
