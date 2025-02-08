@@ -11,9 +11,7 @@ export function useCharacters() {
 
   useEffect(() => {
     if (loading && api.characters) {
-      api.characters.charactersControllerGet({
-        query: {}
-      })
+      api.characters.charactersControllerGet({})
         .then((characters: GICharacter[]) => {
           setCharacters(characters)
           setIsLoading(false)
